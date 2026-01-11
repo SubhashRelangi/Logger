@@ -1,7 +1,7 @@
 import time
 import gzip
 import shutil
-from pathlib import PATH
+from pathlib import Path
 from config import (
     MAX_FILE_SIZE_MB,
     LOG_DIRECTORY,
@@ -13,7 +13,7 @@ from config import (
 class FileManager:
 
     def __init__(self, file_type: str, 
-                log_directory: PATH = LOG_DIRECTORY, 
+                log_directory: Path = LOG_DIRECTORY, 
                 max_file_size_mb: int = MAX_FILE_SIZE_MB, 
                 dir_max_size_mb: int = LOG_DIRECTORY_MAX_SIZE_MB, 
                 max_compress_percent: int = MAX_COMPRESSION_PERCENT,
