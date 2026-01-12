@@ -35,10 +35,10 @@ class Logger:
         
     def headers(self, *headers):
         if not self.file_manager:
-            print("logger not initialized")
+            raise RuntimeError("logger not initialized")
 
         if not headers:
-            print("Headers cannot be empty")
+            raise ValueError("Headers cannot be empty")
 
         self.headers_list = headers
         with open(self.file_manager.current_file, "a") as f:
@@ -48,7 +48,7 @@ class Logger:
     def publish(self, data):
         record = ",".join(map(str, data)) + "\n"
         try:
-            self.q.put(record, block=False)
+            self.q.put(record)
         except queue.Full:
             pass
 
@@ -58,13 +58,17 @@ class Logger:
 
 
     def _worker_loop(self):
-        with open(self.file_manager.current_file, "a", encoding="utf-8") as f:
-            while self._running or not self.q.empty():
-                try:
-                    record = self.q.get()
-                except queue.Empty:
-                    continue
+        while self._running or not self.q.empty():
+            try:
+                record = self.q.get(timeout=0.0001)
+            except queue.Empty:
+                continue
 
-                self.file_manager.rotate_if_needed()
+            self.file_manager.rotate_if_needed()
+            self.file_manager.compress_directory_if_needed()
+
+            with open(self.file_manager.current_file, "a", encoding="utf-8") as f:
                 f.write(record)
-                self.q.task_done()
+
+            self.q.task_done()
+

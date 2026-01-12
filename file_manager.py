@@ -1,4 +1,5 @@
 import time
+import datetime
 import gzip
 import shutil
 from pathlib import Path
@@ -7,7 +8,6 @@ from config import (
     LOG_DIRECTORY,
     LOG_DIRECTORY_MAX_SIZE_MB,
     MAX_COMPRESSION_PERCENT,
-    LOG_TIMESTAMP_FORMAT,
 )
 
 class FileManager:
@@ -33,12 +33,20 @@ class FileManager:
         self.current_file = self._new_log_file()
 
     def _new_log_file(self):
-        ts = time.strftime(LOG_TIMESTAMP_FORMAT)
-        return self.log_dir / f"log_{ts}.{self.file_type}"
+        ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
+        path = self.log_dir / f"log_{ts}.{self.file_type}"
+        self.log_dir.mkdir(parents=True, exist_ok=True)
+        path.touch(exist_ok=False)
+        return path
 
     def rotate_if_needed(self):
+        if not self.current_file.exists():
+            self.current_file = self._new_log_file()
+            return
+
         if self.current_file.stat().st_size >= self.max_file_size:
             self.current_file = self._new_log_file()
+
 
     def directory_size(self):
         # total_size = 0
@@ -53,10 +61,10 @@ class FileManager:
         return sum(f.stat().st_size for f in self.log_dir.iterdir() if f.is_file())
     
     def compress_directory_if_needed(self):
-        if self.compress:
+        if not self.compress:
             return
-        
-        if self.directory_size() < self.dir_max_size:
+        current_size = self.directory_size()
+        if current_size < self.dir_max_size:
             return
         
         compression_size = self.dir_max_size * (self.max_compress_percent / 100)
@@ -78,6 +86,8 @@ class FileManager:
 
         # files.sort(key=lambda f: f.stat().st_mtime)
 
+        # Why we are sorting the files because by this sorting comes first written file like older -> newer
+
         files = sorted(
             (f for f in self.log_dir.iterdir() if f.is_file() and not f.name.endswith(".gz")),
             key=lambda f: f.stat().st_mtime,
@@ -98,11 +108,11 @@ class FileManager:
             #     f_in.close()
             #     f_out.close()
 
+            # Lossless compression formats reduce disk usage while preserving data exactly; loggers must use streaming-friendly lossless formats like gzip or zstd.
             with open(file, "rb") as f_in, gzip.open(gz_path, "wb") as f_out:
                 shutil.copyfileobj(f_in, f_out) # all files in the os level in the binary format
 
+            size = file.stat().st_size
             file.unlink() # the converted file will be deleted
+            current_size -= size
             
-
-    
-    
