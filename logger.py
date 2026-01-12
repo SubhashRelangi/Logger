@@ -2,7 +2,7 @@ import threading
 import queue
 from storage import SystemStorage
 from file_manager import FileManager
-from config import QUEUE_SIZE
+from config import QUEUE_SIZE, MAX_FILE_SIZE_MB
 
 class Logger:
 
@@ -10,6 +10,7 @@ class Logger:
         self.file_manager = None
         self._running = False
         self.q = queue.Queue(maxsize=QUEUE_SIZE)
+        self.headers_line = None
         self._worker = None
 
     def initialize_logger(self, file_type: str, compress: bool = False):
@@ -32,18 +33,12 @@ class Logger:
         )
         self._worker.start()
 
-        
     def headers(self, *headers):
-        if not self.file_manager:
-            raise RuntimeError("logger not initialized")
-
         if not headers:
             raise ValueError("Headers cannot be empty")
 
-        self.headers_list = headers
-        with open(self.file_manager.current_file, "a") as f:
-            f.write(",".join(headers) + "\n")
-
+        # store once, worker will write per file
+        self.headers_line = ",".join(headers) + "\n"
 
     def publish(self, data):
         record = ",".join(map(str, data)) + "\n"
@@ -52,23 +47,44 @@ class Logger:
         except queue.Full:
             pass
 
-
     def stop(self):
         self._running = False
-
+        self._worker.join()
 
     def _worker_loop(self):
-        while self._running or not self.q.empty():
-            try:
-                record = self.q.get(timeout=0.0001)
-            except queue.Empty:
-                continue
+        max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
+        current_size = 0
 
-            self.file_manager.rotate_if_needed()
-            self.file_manager.compress_directory_if_needed()
+        f = open(self.file_manager.current_file, "ab")
 
-            with open(self.file_manager.current_file, "a", encoding="utf-8") as f:
-                f.write(record)
+        if self.headers_line:
+            h = self.headers_line.encode("utf-8")
+            f.write(h)
+            current_size += len(h)
 
-            self.q.task_done()
+        try:
+            while self._running or not self.q.empty():
+                try:
+                    record = self.q.get(timeout=0.1)
+                except queue.Empty:
+                    continue
 
+                encoded = record.encode("utf-8")
+
+                if current_size + len(encoded) >= max_bytes:
+                    f.close()
+                    self.file_manager.compress_directory_if_needed()
+                    self.file_manager.current_file = self.file_manager._new_log_file()
+                    f = open(self.file_manager.current_file, "ab")
+                    current_size = 0
+
+                    if self.headers_line:
+                        h = self.headers_line.encode("utf-8")
+                        f.write(h)
+                        current_size += len(h)
+
+                f.write(encoded)
+                current_size += len(encoded)
+                self.q.task_done()
+        finally:
+            f.close()

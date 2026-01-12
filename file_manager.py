@@ -39,13 +39,13 @@ class FileManager:
         path.touch(exist_ok=False)
         return path
 
-    def rotate_if_needed(self):
-        if not self.current_file.exists():
-            self.current_file = self._new_log_file()
-            return
+    # def rotate_if_needed(self):
+    #     if not self.current_file.exists():
+    #         self.current_file = self._new_log_file()
+    #         return
 
-        if self.current_file.stat().st_size >= self.max_file_size:
-            self.current_file = self._new_log_file()
+    #     if self.current_file.stat().st_size >= self.max_file_size:
+    #         self.current_file = self._new_log_file()
 
 
     def directory_size(self):
