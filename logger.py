@@ -1,5 +1,6 @@
 import threading
 import queue
+import time
 from storage import SystemStorage
 from file_manager import FileManager
 from config import QUEUE_SIZE, MAX_FILE_SIZE_MB
@@ -36,8 +37,7 @@ class Logger:
     def headers(self, *headers):
         if not headers:
             raise ValueError("Headers cannot be empty")
-
-        # store once, worker will write per file
+        
         self.headers_line = ",".join(headers) + "\n"
 
     def publish(self, data):
@@ -56,6 +56,8 @@ class Logger:
         current_size = 0
 
         f = open(self.file_manager.current_file, "ab")
+        start = time.time()
+        sec = 0
 
         if self.headers_line:
             h = self.headers_line.encode("utf-8")
@@ -65,6 +67,7 @@ class Logger:
         try:
             while self._running or not self.q.empty():
                 try:
+                    pref = time.time()
                     record = self.q.get(timeout=0.1)
                 except queue.Empty:
                     continue
@@ -84,6 +87,12 @@ class Logger:
                         current_size += len(h)
 
                 f.write(encoded)
+                sec += 1
+
+                if pref - start >= 1.0:
+                    print(f"Worker Exc: {sec}")
+                    sec = 0 
+                    start = pref
                 current_size += len(encoded)
                 self.q.task_done()
         finally:
