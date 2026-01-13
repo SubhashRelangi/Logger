@@ -1,0 +1,75 @@
+Basic Logger:
+	
+	Config Variables:
+		
+		storage_threshold = 80%  -> #This value is used to log will start or not.
+		max_file_size = 10mb  -> #The maximum size of the log file. if size achieved create a new file with timestamps.
+		log_directory = "/logs"  -> #This tells the where we want to store the log files.
+		log_directory_max_size = 100mb  -> #The maximum size of the log file. if size achieved compression will be start.
+		max_compressions = 70%  -> #The maximun compression of the folder. after achieved the log_directory_max_size.
+		
+		
+	Execution:
+		
+		logger.SystemStorage() -> check the storage capacity of the system and check storage_threshold. if the value of the systemstorage < storage_threshold return the bool value other wise return bool and raise exception "can't intialise due to low memeory".
+			eg:	
+				storage = SystemStorage(storage_threshold) # returns true or false
+		
+		logger.iniatilize_logger() -> if the SystemStorage() returns true starts the logger iniatilize logger. we need to set the file_type default("Must be initilize") and compress default(false). if all good execute successfully retun the bool value (true) otherwise (false).
+			eg:
+				if storage:
+					logger = iniatilize_logger(file_type = "excel", compress=true) # returns true or false
+				else:
+					raise exception ("logger can't be initilize because there is no sufficient memory for logging.")
+					
+		logger.header() -> log starter if the iniatilize_logger return true. other wise raise exception. In this we need to set the headers of the file by manually. #After returns the bool value if its pass or fail.
+			eg:
+				if logger:
+					loggerHeaders = logger.headers("","","","","")
+				else:
+					raise exception ("logger can't be initilize headers because there is exception in the initilize of the logger.")
+					
+		logger.logs() -> data logging starts here after successfully completed previous functions. In this function we write the logs to the log_file with the payloads of headers we initilize. 
+			eg: 
+				if loggerHeaders:
+					logger.logs()
+				else:
+					raise exception ("data logging not working there is an error in the loggerheader.")
+					
+					
+	
+	WorkFlow:
+		
+		1. user imports the logger.
+		2. user initilize the logger.
+		3. user sets the headers of the logs.
+		4. based on the headers writes logs.
+		5. start the logger.
+		6. publishing the data to the logger QUEUE (repeat).
+		7. worker writes the Queue data to the file (repeat).
+		8. stop the logger gracefully.
+		
+		
+	Execution class:
+		
+		class Logger:
+			
+			def __init__(self): -> initilize the logger
+			
+			def start(self): -> starts the logger
+			
+			def publish(self): -> publish data to the Queue
+						
+			def stop(self): -> stops the logger
+		 	 
+		 	def _telementryworker(): -> writes the Queue data to the file
+		 	
+		 	def _eventworker(): -> writes the Queue data to the file
+		 	
+		 	def _systemStorage(): -> checks the storage before initilize the logger
+		 	
+		 	def header(self): -> set header by user choice
+		 	
+		 	def _file(): -> checks the file size and folder size
+		 	
+		 	

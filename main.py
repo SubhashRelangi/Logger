@@ -1,6 +1,6 @@
 import time
 import datetime
-from logger import Logger
+from logger1 import Logger
 
 def realtime_hms_ms():
     now = datetime.datetime.now()
@@ -27,7 +27,7 @@ def main():
             print(f"Main Exc: {sec}")
             sec = 0
             start = pref
-        time.sleep(0.000001)
+        # time.sleep(0.000001)
 
 if __name__ == "__main__":
     main()
