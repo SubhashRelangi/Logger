@@ -116,7 +116,7 @@ class Logger:
 
                 sec += 1
                 if pref - start >= 1.0:
-                    print(f"Worker Exc: {sec} | Queue size: {self.q.qsize()}")
+                    print(f"Worker Exc: {sec}")
                     sec = 0
                     start = pref
 

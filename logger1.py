@@ -127,7 +127,7 @@ class Logger:
                 sec += 1
                 now = time.time()
                 if now - start >= 1.0:
-                    print(f"Worker Exc: {sec} | Queue size: {q.qsize()}")
+                    print(f"Worker Exc: {sec}")
                     sec = 0
                     start = now
 
