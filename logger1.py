@@ -12,10 +12,15 @@ STOP = "__STOP__"
 class Logger:
     def __init__(self):
         self.q = multiprocessing.Queue(maxsize=QUEUE_SIZE)
+
         self.headers_line = None
-        self.compress = False
         self.file_type = None
+        self.compress = False
+
         self._worker = None
+        self._compressor = None
+
+        self._compress_event = multiprocessing.Event()
 
     def initialize_logger(self, file_type: str, compress: bool = False):
         if not file_type:
@@ -36,85 +41,108 @@ class Logger:
         if self._worker is not None:
             raise RuntimeError("Logger already started")
 
+        # WORKER PROCESS 
         self._worker = multiprocessing.Process(
-            target=_worker_loop,
-            args=(
-                self.q,
-                self.file_type,
-                self.compress,
-                self.headers_line,
-            ),
-        )
+            target=Logger._worker_loop,      
+            args=(self, self.q, self.file_type, self.headers_line, self._compress_event),
+        )   
         self._worker.start()
+
+        # COMPRESSOR PROCESS
+        if self.compress:
+            self._compressor = multiprocessing.Process(
+                target=Logger._compressor_loop,  
+                args=(self, self.file_type, self._compress_event),
+            )
+            self._compressor.start()
 
     def publish(self, data):
         record = ",".join(map(str, data)) + "\n"
         try:
             self.q.put(record, timeout=0.01)
         except queue.Full:
-            # Drop log silently (or count drops if needed)
-            pass
+            pass  
 
     def stop(self):
         if self._worker is None:
             return
 
-        # Signal shutdown
+        # stop worker
         self.q.put(STOP)
-
-        # Wait for clean exit
         self._worker.join()
+
+        # stop compressor
+        if self._compressor:
+            self._compress_event.set()
+            self._compressor.terminate()
+            self._compressor.join()
+
         self._worker = None
+        self._compressor = None
 
 
-def _worker_loop(q, file_type, compress, headers_line):
-    file_manager = FileManager(file_type=file_type, compress=compress)
+    def _worker_loop(self, q, file_type, headers_line, compress_event):
+        file_manager = FileManager(file_type=file_type, compress=False, create_file=True)
 
-    max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
-    current_size = 0
+        max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
+        current_size = 0
 
-    f = open(file_manager.current_file, "a")
+        f = open(file_manager.current_file, "ab")
 
-    if headers_line:
-        h = headers_line
-        f.write(h)
-        current_size += len(h)
+        if headers_line:
+            h = headers_line.encode("utf-8")
+            f.write(h)
+            current_size += len(h)
 
-    start = time.time()
-    sec = 0
+        start = time.time()
+        sec = 0
 
-    try:
+        try:
+            while True:
+                record = q.get()
+
+                if record == STOP:
+                    break
+
+                encoded = record.encode("utf-8")
+                size = len(encoded)
+
+                if current_size + size >= max_bytes:
+                    f.close()
+
+                    # setting compression
+                    compress_event.set()
+
+                    file_manager.current_file = file_manager._new_log_file()
+                    f = open(file_manager.current_file, "ab")
+                    current_size = 0
+
+                    if headers_line:
+                        f.write(h)
+                        current_size = len(h)
+
+                f.write(encoded)
+                current_size += size
+
+                sec += 1
+                now = time.time()
+                if now - start >= 1.0:
+                    print(f"Worker Exc: {sec} | Queue size: {q.qsize()}")
+                    sec = 0
+                    start = now
+
+        finally:
+            f.close()
+
+
+    def _compressor_loop(self, file_type, compress_event):
+        file_manager = FileManager(file_type=file_type, compress=True, create_file=False)
+
         while True:
-            record = q.get()  # blocking is fine because of STOP sentinel
+            compress_event.wait(timeout=1.0)
+            compress_event.clear()
 
-            if record == STOP:
-                break
-
-            encoded = record.encode("utf-8")
-
-            if current_size + len(encoded) >= max_bytes:
-                f.close()
-
-                if compress:
-                    file_manager.compress_directory_if_needed()
-
-                file_manager.current_file = file_manager._new_log_file()
-                f = open(file_manager.current_file, "a")
-                current_size = 0
-
-                if headers_line:
-                    f.write(h)
-                    current_size = len(h)
-
-            f.write(record)
-            current_size += len(encoded)
-            sec += 1
-
-            now = time.time()
-            if now - start >= 1.0:
-                print(f"Worker Exc: {sec}")
-                sec = 0
-                start = now
-
-    finally:
-        f.close()
+            try:
+                file_manager.compress_directory_if_needed()
+            except Exception as e:
+                print(f"[compressor] error: {e}")

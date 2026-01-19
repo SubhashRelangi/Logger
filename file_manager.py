@@ -17,7 +17,9 @@ class FileManager:
                 max_file_size_mb: int = MAX_FILE_SIZE_MB, 
                 dir_max_size_mb: int = LOG_DIRECTORY_MAX_SIZE_MB, 
                 max_compress_percent: int = MAX_COMPRESSION_PERCENT,
-                compress: bool = False):
+                compress: bool = False,
+                # create_file: bool = True # For the Multiprocessing
+                ):
     
         if not file_type:
             print("file_type must be initialized")
@@ -31,6 +33,8 @@ class FileManager:
 
         self.log_dir.mkdir(parents=True, exist_ok=True)
         self.current_file = self._new_log_file()
+        # if create_file:
+        #     self.current_file = self._new_log_file()
 
     def _new_log_file(self):
         ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
