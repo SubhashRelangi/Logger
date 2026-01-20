@@ -1,6 +1,6 @@
 import time
 import datetime
-from loggerbin import Logger
+from loggertlv import Logger
 
 
 def realtime_hms_ms():
@@ -11,7 +11,7 @@ def realtime_hms_ms():
 def main():
     logger = Logger()
 
-    logger.initilizer("bin", compress=True)
+    logger.initilizer("tlv.bin", compress=True)
 
     logger.headers(
         "timestamp",
