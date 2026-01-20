@@ -1,5 +1,6 @@
 import threading
 import queue
+from openpyxl import Workbook
 from config import QUEUE_SIZE, MAX_FILE_SIZE_MB
 from storage import SystemStorage
 from file_manager import FileManager
@@ -135,51 +136,51 @@ class Logger:
         if self._compressor:
             self._compressor.join()
 
-    def bin_worker(self): # needs to change in the conversion of the format to store
-        max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
-        current_size = 0
+    # def bin_worker(self): # needs to change in the conversion of the format to store
+    #     max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
+    #     current_size = 0
 
-        f = open(self.file_manager.current_file, "ab")
+    #     f = open(self.file_manager.current_file, "ab")
 
-        if self.headers_blob:
-            h = self.headers_blob
-            f.write(h)
-            current_size += len(h)
+    #     if self.headers_blob:
+    #         h = self.headers_blob
+    #         f.write(h)
+    #         current_size += len(h)
 
-        try:
-            while self._running or not self.q.empty():
-                try:
-                    record = self.q.get(timeout=0.1)
-                except queue.Empty:
-                    continue
+    #     try:
+    #         while self._running or not self.q.empty():
+    #             try:
+    #                 record = self.q.get(timeout=0.1)
+    #             except queue.Empty:
+    #                 continue
 
-                encoded = record.encode("utf-8")
-                size = len(encoded)
+    #             encoded = record.encode("utf-8")
+    #             size = len(encoded)
 
-                if current_size + size >= max_bytes:
-                    f.close()
+    #             if current_size + size >= max_bytes:
+    #                 f.close()
 
-                    self._compress_event.set()
+    #                 self._compress_event.set()
                     
-                    self.file_manager.current_file = self.file_manager._new_log_file()
-                    f = open(self.file_manager.current_file, "ab")
-                    current_size = 0
+    #                 self.file_manager.current_file = self.file_manager._new_log_file()
+    #                 f = open(self.file_manager.current_file, "ab")
+    #                 current_size = 0
 
-                    if self.headers_line:
-                        h = self.headers_blob
-                        f.write(h)
-                        current_size += len(h)
+    #                 if self.headers_line:
+    #                     h = self.headers_blob
+    #                     f.write(h)
+    #                     current_size += len(h)
 
-                f.write(encoded)
-                current_size += size
-                self.q.task_done()
+    #             f.write(encoded)
+    #             current_size += size
+    #             self.q.task_done()
 
-        finally:
-            f.close()
+    #     finally:
+    #         f.close()
 
 
-    def tlv_worker(self):
-        pass
+    # def tlv_worker(self):
+    #     pass
 
     def csv_worker(self):
         max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
@@ -224,7 +225,61 @@ class Logger:
             f.close()
 
     def xlsx_worker(self):
-        pass
+        # Excel hard limit ≈ 1,048,576
+        MAX_ROWS = 1_000_000
+        wb = Workbook(write_only=True)
+        ws = wb.create_sheet(title="log")
+        row_count = 0
+
+        def prepare_new_sheet(workbook):
+            sheet = workbook.create_sheet(title="log")
+            count = 0
+            if self.schema:
+                sheet.append(list(self.schema))
+                count = 1
+            return sheet, count
+
+        # Initial header setup
+        if self.schema:
+            ws.append(list(self.schema))
+            row_count = 1
+
+        try:
+            while self._running or not self.q.empty():
+                try:
+                    # Use a slightly longer timeout to reduce CPU spikes
+                    record = self.q.get(timeout=0.5)
+                except queue.Empty:
+                    continue
+
+                try:
+                    ws.append(list(record))
+                    row_count += 1
+                finally:
+                    # Always mark task done even if append fails
+                    self.q.task_done()
+
+                # Rotate XLSX file
+                if row_count >= MAX_ROWS:
+                    wb.save(self.file_manager.current_file)
+                    self._compress_event.set()
+
+                    # Setup new workbook
+                    self.file_manager.current_file = self.file_manager._new_log_file()
+                    wb = Workbook(write_only=True)
+                    ws, row_count = prepare_new_sheet(wb)
+
+        except Exception as e:
+            # Log your error here so the thread doesn't die silently
+            print(f"Worker error: {e}")
+        finally:
+            # Only save if we actually wrote data beyond the header
+            # or if the file doesn't exist yet.
+            try:
+                wb.save(self.file_manager.current_file)
+                wb.close()
+            except Exception:
+                pass
 
     def _compressor_loop(self):
         while self._running:
