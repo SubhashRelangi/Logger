@@ -29,7 +29,7 @@ class Logger:
 
         self.file_manager = FileManager(file_type=file_type, compress=compress)
 
-    # ---------- HEADERS (DYNAMIC, ONCE PER FILE) ----------
+    # ---------- HEADERS ----------
     def headers(self, *headers):
         if not headers:
             raise ValueError("Headers cannot be empty")
@@ -47,9 +47,6 @@ class Logger:
             buf += b
 
         self.headers_blob = bytes(buf)
-
-        # enqueue header ONCE
-        self.q.put(self.headers_blob)
 
     # ---------- RECORD ENCODER ----------
     def _encode_record(self, values):
@@ -72,14 +69,9 @@ class Logger:
 
         return bytes(record)
 
-
-    # ---------- PUBLISH (VALUES → BINARY) ----------
+    # ---------- PUBLISH ----------
     def publish(self, values):
-        """
-        values: iterable of strings (or stringable)
-        """
         record = self._encode_record(values)
-
         try:
             self.q.put(record, timeout=0.01)
         except queue.Full:
@@ -89,6 +81,9 @@ class Logger:
     def start(self):
         if self.file_manager is None:
             raise RuntimeError("Logger not initialized")
+
+        if self.headers_blob is None:
+            raise RuntimeError("Headers must be set before start()")
 
         self._running = True
 
@@ -116,14 +111,19 @@ class Logger:
         if self._compressor:
             self._compressor.join()
 
-    # ---------- WORKER (BYTES ONLY) ----------
+    # ---------- WORKER ----------
     def _worker_loop(self):
         max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
         current_size = 0
         start = time.time()
         sec_count = 0
 
+        # open first file
         f = open(self.file_manager.current_file, "ab")
+
+        # WRITE HEADER 
+        f.write(self.headers_blob)
+        current_size = len(self.headers_blob)
 
         try:
             while self._running or not self.q.empty():
@@ -135,22 +135,27 @@ class Logger:
 
                 size = len(record)
 
+                # rotate BEFORE write
                 if current_size + size > max_bytes:
                     f.close()
                     self._compress_event.set()
 
                     self.file_manager.current_file = self.file_manager._new_log_file()
                     f = open(self.file_manager.current_file, "ab")
-                    current_size = 0
+
+                    # write header again
+                    f.write(self.headers_blob)
+                    current_size = len(self.headers_blob)
 
                 f.write(record)
+                current_size += size
                 sec_count += 1
 
                 if end - start >= 1.0:
                     print(f"[Worker] Exc: {sec_count}")
                     sec_count = 0
                     start = end
-                current_size += size
+
                 self.q.task_done()
 
         finally:

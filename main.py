@@ -1,6 +1,6 @@
 import time
 import datetime
-from loggerxlsx import Logger
+from loggerbin import Logger
 
 
 def realtime_hms_ms():
