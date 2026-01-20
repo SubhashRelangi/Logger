@@ -21,7 +21,7 @@ class Logger:
         self._compress_event = threading.Event()
 
     # ---------- INIT ----------
-    def initialize_logger(self, file_type: str, compress: bool = False):
+    def initilizer(self, file_type: str, compress: bool = False):
         if not file_type:
             raise ValueError("file_type must be provided")
 

@@ -11,7 +11,7 @@ def realtime_hms_ms():
 def main():
     logger = Logger()
 
-    logger.initialize_logger("xlsx", compress=True)
+    logger.initilizer("bin", compress=True)
 
     logger.headers(
         "timestamp",
