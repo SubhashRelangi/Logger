@@ -49,31 +49,31 @@ class Logger:
         self.headers_blob = bytes(buf)
 
     # ---------- RECORD ENCODER ----------
-    def _encode_record(self, values):
-        if not self.schema:
-            raise RuntimeError("Schema not set. Call headers() first.")
+    # def _encode_record(self, values):
+    #     if not self.schema:
+    #         raise RuntimeError("Schema not set. Call headers() first.")
 
-        if len(values) != len(self.schema):
-            raise ValueError("Record does not match schema length")
+    #     if len(values) != len(self.schema):
+    #         raise ValueError("Record does not match schema length")
 
-        payload = bytearray()
+    #     payload = bytearray()
 
-        for value in values:
-            b = str(value).encode("utf-8")
-            payload += len(b).to_bytes(2, "little")
-            payload += b
+    #     for value in values:
+    #         b = str(value).encode("utf-8")
+    #         payload += len(b).to_bytes(2, "little")
+    #         payload += b
 
-        record = bytearray()
-        record += len(payload).to_bytes(2, "little")
-        record += payload
+    #     record = bytearray()
+    #     record += len(payload).to_bytes(2, "little")
+    #     record += payload
 
-        return bytes(record)
+    #     return bytes(record)
 
     # ---------- PUBLISH ----------
     def publish(self, values):
-        record = self._encode_record(values)
+        # record = self._encode_record(values)
         try:
-            self.q.put(record, timeout=0.01)
+            self.q.put(values, timeout=0.01)
         except queue.Full:
             pass
 

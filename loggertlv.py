@@ -65,33 +65,33 @@ class Logger:
         self.headers_blob = bytes(buf)
 
     def publish(self, values):
-        record = self._encode_record(values)
+        # record = self._encode_record(values)
         try:
-            self.q.put(record, timeout=0.01)
+            self.q.put(values, timeout=0.01)
         except queue.Full:
             pass
 
-    def _encode_record(self, values):
-        if not self.schema:
-            raise RuntimeError("Schema not set. Call headers() first.")
+    # def _encode_record(self, values):
+    #     if not self.schema:
+    #         raise RuntimeError("Schema not set. Call headers() first.")
 
-        if len(values) != len(self.schema):
-            raise ValueError("Record does not match schema length")
+    #     if len(values) != len(self.schema):
+    #         raise ValueError("Record does not match schema length")
         
-        buf = bytearray()
+    #     buf = bytearray()
 
-        for field_id, value in enumerate(values):
-            v = str(value).encode("utf-8")
+    #     for field_id, value in enumerate(values):
+    #         v = str(value).encode("utf-8")
 
-            buf += field_id.to_bytes(1, "little")   # Type
-            buf += len(v).to_bytes(2, "little")     # Length
-            buf += v                                # Value
+    #         buf += field_id.to_bytes(1, "little")   # Type
+    #         buf += len(v).to_bytes(2, "little")     # Length
+    #         buf += v                                # Value
 
-        record = bytearray()
-        record += len(buf).to_bytes(2, "little")   # record length
-        record += buf
+    #     record = bytearray()
+    #     record += len(buf).to_bytes(2, "little")   # record length
+    #     record += buf
 
-        return bytes(record)
+    #     return bytes(record)
 
     def stop(self):
         self._running = False
