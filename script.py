@@ -1,7 +1,7 @@
 import time
 import datetime
 import struct
-from loggerxlsx import Logger
+from logger import Logger
 
 
 
@@ -59,7 +59,7 @@ def realtime_hms_ms():
 
 def main():
     logger = Logger()
-    logger.initilizer("xlsx", compress=True)
+    logger.initialize("csv", compress=True)
 
     logger.headers(
         "timestamp",
@@ -91,8 +91,8 @@ def main():
 
     # sat_count = 9
 
-    # # TLV Format
-    # # binary_data = build_tlv_record(ts_ms, values, sat_count)
+    # # # TLV Format
+    # binary_data = build_tlv_record(ts_ms, values, sat_count)
 
     # packer = struct.Struct("<I 11f B")
 
