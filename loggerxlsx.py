@@ -13,7 +13,7 @@ class Logger:
         self.file_type = None
         self.headers_list = None
 
-        self.q = queue.Queue(maxsize=QUEUE_SIZE)
+        self.q = queue.Queue()
 
         self._running = False
         self._worker_thread = None
@@ -114,8 +114,12 @@ class Logger:
 
                 if row_count >= MAX_ROWS:
                     # finalize exceeded file
+                    start = time.time()
                     wb.save(self.file_manager.current_file)
+                    end = time.time()
                     wb.close()
+
+                    print(f"XLSX Format Saving Time: {end - start:.6f} seconds")
 
                     # notify compressor AFTER close
                     self._compress_event.set()
@@ -125,8 +129,12 @@ class Logger:
                     wb, ws, row_count = open_new_workbook()
 
         finally:
+            start = time.time()
             wb.save(self.file_manager.current_file)
+            end = time.time()
             wb.close()
+
+            print(f"XLSX Format Saving Time: {end - start:.6f} seconds")
 
 
 

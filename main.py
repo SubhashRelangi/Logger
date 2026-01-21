@@ -1,7 +1,7 @@
 import time
 import datetime
 import struct
-from loggerbin import Logger
+from loggerxlsx import Logger
 
 
 # ---------------- Time helpers (test only) ----------------
