@@ -15,7 +15,7 @@ Basic Logger:
 			eg:	
 				storage = SystemStorage(storage_threshold) # returns true or false
 		
-		logger.iniatilize_logger() -> if the SystemStorage() returns true starts the logger iniatilize logger. we need to set the file_type default("Must be initilize") and compress default(false). if all good execute successfully retun the bool value (true) otherwise (false).
+		logger.iniatilize() -> if the SystemStorage() returns true starts the logger iniatilize logger. we need to set the file_type default("Must be initilize") and compress default(false). if all good execute successfully retun the bool value (true) otherwise (false).
 			eg:
 				if storage:
 					logger = iniatilize_logger(file_type = "excel", compress=true) # returns true or false
@@ -29,14 +29,18 @@ Basic Logger:
 				else:
 					raise exception ("logger can't be initilize headers because there is exception in the initilize of the logger.")
 					
-		logger.logs() -> data logging starts here after successfully completed previous functions. In this function we write the logs to the log_file with the payloads of headers we initilize. 
-			eg: 
-				if loggerHeaders:
-					logger.logs()
-				else:
-					raise exception ("data logging not working there is an error in the loggerheader.")
-					
-					
+		logger.start() -> initilize the threads to the worker and compressor.
+
+		logger.publish() -> data is published to the logger it publish to the queue.
+
+		logger.stop() -> the logger will be stop gracefully.
+
+		Protected methods in the logger:
+
+			_worker() -> fetching data from the queue and writes to the logger file with the initilized format.
+
+			_compressor() -> it checks to the directory every file rotaion happen if the directory hits the log directory max size it will compress the directory.
+				
 	
 	WorkFlow:
 		
