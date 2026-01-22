@@ -59,7 +59,7 @@ def realtime_hms_ms():
 
 def main():
     logger = Logger()
-    logger.initialize("csv", compress=True)
+    logger.initialize("bin", compress=True)
 
     logger.headers(
         "timestamp",
@@ -92,7 +92,7 @@ def main():
     # sat_count = 9
 
     # # # TLV Format
-    # binary_data = build_tlv_record(ts_ms, values, sat_count)
+    # # binary_data = build_tlv_record(ts_ms, values, sat_count)
 
     # packer = struct.Struct("<I 11f B")
 
@@ -119,7 +119,7 @@ def main():
                 "233.245483398438",
                 "22.5792655944824",
                 "75.7095489501953"
-            ])
+            ], encode=True)
             # logger.publish(binary_data)
 
             sec += 1

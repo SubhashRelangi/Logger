@@ -60,11 +60,11 @@ class Logger:
                     daemon=True
                 )
 
-            # case "xlsx":
-            #     self._worker = threading.Thread(
-            #         target=self.xlsx_worker,
-            #         daemon=True
-            #     )
+            case "xlsx":
+                self._worker = threading.Thread(
+                    target=self.xlsx_worker,
+                    daemon=True
+                )
             case _:
                 raise ValueError("Invalied file format.")
             
@@ -119,8 +119,8 @@ class Logger:
 
                 self.headers_blob = bytes(buf)
 
-            # case "xlsx":
-            #     self.headers_blob = self.schema
+            case "xlsx":
+                self.headers_blob = self.schema
 
             case _:
                 raise ValueError(f"Unsupported file type: {self.file_type}")
@@ -128,20 +128,23 @@ class Logger:
         
 
     # =========================== PUBLISHER ========================
-    def publish(self, values):
+    def publish(self, values, encode):
         
-        # match self.file_type:
-        #     case "bin":
-        #         record = self._encode_record_bin(values)
+        if encode:
+            match self.file_type:
+                case "bin":
+                    record = self._encode_record_bin(values)
 
-        #     case "tlv.bin":
-        #         record = self._encode_record_tlvbin(values)
+                case "tlv.bin":
+                    record = self._encode_record_tlvbin(values)
 
-        #     case _:
-        #         record = values
+                case _:
+                    record = values
+        else:
+            record = values
 
         try:
-            self.q.put(values, timeout=0.01)
+            self.q.put(record, timeout=0.01)
         except queue.Full:
             pass
 
@@ -155,48 +158,48 @@ class Logger:
             self._compressor.join()
     
     # =========================== BIN ENCODER ========================
-    # def _encode_record_bin(self, values):
-    #     if not self.schema:
-    #         raise RuntimeError("Schema not set. Call headers() first.")
+    def _encode_record_bin(self, values):
+        if not self.schema:
+            raise RuntimeError("Schema not set. Call headers() first.")
 
-    #     if len(values) != len(self.schema):
-    #         raise ValueError("Record does not match schema length")
+        if len(values) != len(self.schema):
+            raise ValueError("Record does not match schema length")
 
-    #     payload = bytearray()
+        payload = bytearray()
 
-    #     for value in values:
-    #         b = str(value).encode("utf-8")
-    #         payload += len(b).to_bytes(2, "little")
-    #         payload += b
+        for value in values:
+            b = str(value).encode("utf-8")
+            payload += len(b).to_bytes(2, "little")
+            payload += b
 
-    #     record = bytearray()
-    #     record += len(payload).to_bytes(2, "little")
-    #     record += payload
+        record = bytearray()
+        record += len(payload).to_bytes(2, "little")
+        record += payload
 
-    #     return bytes(record)
+        return bytes(record)
     
     # # =========================== TLV BIN ENCODER ========================
-    # def _encode_record_tlvbin(self, values):
-    #     if not self.schema:
-    #         raise RuntimeError("Schema not set. Call headers() first.")
+    def _encode_record_tlvbin(self, values):
+        if not self.schema:
+            raise RuntimeError("Schema not set. Call headers() first.")
 
-    #     if len(values) != len(self.schema):
-    #         raise ValueError("Record does not match schema length")
+        if len(values) != len(self.schema):
+            raise ValueError("Record does not match schema length")
         
-    #     buf = bytearray()
+        buf = bytearray()
 
-    #     for field_id, value in enumerate(values):
-    #         v = str(value).encode("utf-8")
+        for field_id, value in enumerate(values):
+            v = str(value).encode("utf-8")
 
-    #         buf += field_id.to_bytes(1, "little")   # Type
-    #         buf += len(v).to_bytes(2, "little")     # Length
-    #         buf += v                                # Value
+            buf += field_id.to_bytes(1, "little")   # Type
+            buf += len(v).to_bytes(2, "little")     # Length
+            buf += v                                # Value
 
-    #     record = bytearray()
-    #     record += len(buf).to_bytes(2, "little")   # record length
-    #     record += buf
+        record = bytearray()
+        record += len(buf).to_bytes(2, "little")   # record length
+        record += buf
 
-    #     return bytes(record)
+        return bytes(record)
         
     # =========================== BIN WORKER ========================
     def bin_worker(self):
@@ -335,62 +338,62 @@ class Logger:
             f.close()
 
 
-    # def xlsx_worker(self):
-    #     # Excel hard limit ≈ 1,048,576
-    #     MAX_ROWS = 1_000_000
-    #     wb = Workbook(write_only=True)
-    #     ws = wb.create_sheet(title="log")
-    #     row_count = 0
+    def xlsx_worker(self):
+        # Excel hard limit ≈ 1,048,576
+        MAX_ROWS = 250_000
+        wb = Workbook(write_only=True)
+        ws = wb.create_sheet(title="log")
+        row_count = 0
 
-    #     def prepare_new_sheet(workbook):
-    #         sheet = workbook.create_sheet(title="log")
-    #         count = 0
-    #         if self.schema:
-    #             sheet.append(list(self.schema))
-    #             count = 1
-    #         return sheet, count
+        def prepare_new_sheet(workbook):
+            sheet = workbook.create_sheet(title="log")
+            count = 0
+            if self.schema:
+                sheet.append(list(self.schema))
+                count = 1
+            return sheet, count
 
-    #     # Initial header setup
-    #     if self.schema:
-    #         ws.append(list(self.schema))
-    #         row_count = 1
+        # Initial header setup
+        if self.schema:
+            ws.append(list(self.schema))
+            row_count = 1
 
-    #     try:
-    #         while self._running or not self.q.empty():
-    #             try:
-    #                 # Use a slightly longer timeout to reduce CPU spikes
-    #                 record = self.q.get(timeout=0.5)
-    #             except queue.Empty:
-    #                 continue
+        try:
+            while self._running or not self.q.empty():
+                try:
+                    # Use a slightly longer timeout to reduce CPU spikes
+                    record = self.q.get(timeout=0.5)
+                except queue.Empty:
+                    continue
 
-    #             try:
-    #                 ws.append(list(record))
-    #                 row_count += 1
-    #             finally:
-    #                 # Always mark task done even if append fails
-    #                 self.q.task_done()
+                try:
+                    ws.append(list(record))
+                    row_count += 1
+                finally:
+                    # Always mark task done even if append fails
+                    self.q.task_done()
 
-    #             # Rotate XLSX file
-    #             if row_count >= MAX_ROWS:
-    #                 wb.save(self.file_manager.current_file)
-    #                 self._compress_event.set()
+                # Rotate XLSX file
+                if row_count >= MAX_ROWS:
+                    wb.save(self.file_manager.current_file)
+                    self._compress_event.set()
 
-    #                 # Setup new workbook
-    #                 self.file_manager.current_file = self.file_manager._new_log_file()
-    #                 wb = Workbook(write_only=True)
-    #                 ws, row_count = prepare_new_sheet(wb)
+                    # Setup new workbook
+                    self.file_manager.current_file = self.file_manager._new_log_file()
+                    wb = Workbook(write_only=True)
+                    ws, row_count = prepare_new_sheet(wb)
 
-    #     except Exception as e:
-    #         # Log your error here so the thread doesn't die silently
-    #         print(f"Worker error: {e}")
-    #     finally:
-    #         # Only save if we actually wrote data beyond the header
-    #         # or if the file doesn't exist yet.
-    #         try:
-    #             wb.save(self.file_manager.current_file)
-    #             wb.close()
-    #         except Exception:
-    #             pass
+        except Exception as e:
+            # Log your error here so the thread doesn't die silently
+            print(f"Worker error: {e}")
+        finally:
+            # Only save if we actually wrote data beyond the header
+            # or if the file doesn't exist yet.
+            try:
+                wb.save(self.file_manager.current_file)
+                wb.close()
+            except Exception:
+                pass
 
     
     # =========================== COMPRESSOR LOOP ========================
