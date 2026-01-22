@@ -66,9 +66,13 @@ Basic Logger:
 						
 			def stop(self): -> stops the logger
 		 	 
-		 	def _telementryworker(): -> writes the Queue data to the file
-		 	
-		 	def _eventworker(): -> writes the Queue data to the file
+			def csv_worker() -> write in the csv format.
+
+			def bin_worker() -> writes in the bin format.
+
+			def tlvbin_worker() -> writes in the tlv bin format.
+
+			def xlsx_worker() -> writes in the xlsx format.
 		 	
 		 	def _systemStorage(): -> checks the storage before initilize the logger
 		 	
