@@ -4,7 +4,7 @@ import time
 from openpyxl import Workbook
 from config import QUEUE_SIZE
 from storage import SystemStorage
-from file_managerxlsx import FileManager
+from file_managers.file_managerxlsx import FileManager
 
 
 class Logger:
