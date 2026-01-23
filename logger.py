@@ -15,6 +15,8 @@ class Logger:
 
         self.q = queue.Queue(maxsize=QUEUE_SIZE)
         self.headers_blob = None
+        self.dropped_count = 0
+
 
         self._worker = None
         self._compressor = None
@@ -146,6 +148,7 @@ class Logger:
         try:
             self.q.put(record, timeout=0.01)
         except queue.Full:
+            self.dropped_count += 1
             pass
 
     
