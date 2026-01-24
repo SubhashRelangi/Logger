@@ -251,23 +251,62 @@ class Logger:
             if len(values) != len(self.schema):
                 raise ValueError("Record does not match schema length")
             
+            TYPE_BOOL   = 1
+            TYPE_INT    = 2
+            TYPE_FLOAT  = 3
+            TYPE_STRING = 4
+            TYPE_BYTES  = 5
+            TYPE_NONE   = 6
+
             buf = bytearray()
 
-            for field_id, value in enumerate(values):
-                v = str(value).encode("utf-8")
+            for value in values:
 
-                buf += field_id.to_bytes(1, "little")   # Type
-                buf += len(v).to_bytes(2, "little")     # Length
-                buf += v                                # Value
+                # ---------- TYPE + VALUE ----------
+                if value is None:
+                    buf += TYPE_NONE.to_bytes(1, "little")
+                    buf += (0).to_bytes(2, "little")
+
+                elif isinstance(value, bool):
+                    buf += TYPE_BOOL.to_bytes(1, "little")
+                    buf += (1).to_bytes(2, "little")
+                    buf += b"\x01" if value else b"\x00"
+
+                elif isinstance(value, int):
+                    data = struct.pack("<q", value)  # int64
+                    buf += TYPE_INT.to_bytes(1, "little")
+                    buf += len(data).to_bytes(2, "little")
+                    buf += data
+
+                elif isinstance(value, float):
+                    data = struct.pack("<d", value)  # float64
+                    buf += TYPE_FLOAT.to_bytes(1, "little")
+                    buf += len(data).to_bytes(2, "little")
+                    buf += data 
+
+                elif isinstance(value, str):
+                    data = value.encode("utf-8")
+                    buf += TYPE_STRING.to_bytes(1, "little")
+                    buf += len(data).to_bytes(2, "little")
+                    buf += data
+
+                elif isinstance(value, bytes):
+                    buf += TYPE_BYTES.to_bytes(1, "little")
+                    buf += len(value).to_bytes(2, "little")
+                    buf += value
+
+                else:
+                    raise TypeError(f"Unsupported type: {type(value)}")
 
             record = bytearray()
-            record += len(buf).to_bytes(2, "little")   # record length
+            record += len(buf).to_bytes(2, "little")
             record += buf
 
             return bytes(record)
-        
+
         except Exception as e:
-            print(f"Exception in tlv encoder: {e}")
+            raise RuntimeError(f"Exception in TLV encoder: {e}")
+
 
         
     # =========================== BIN WORKER ========================
@@ -283,6 +322,8 @@ class Logger:
 
             # WRITE HEADER 
             f.write(self.headers_blob)
+            f.flush()
+
             current_size = len(self.headers_blob)
 
             try:
@@ -303,6 +344,8 @@ class Logger:
                         f = open(self.file_manager.current_file, "ab")
 
                         f.write(self.headers_blob)
+                        f.flush()
+
                         current_size = len(self.headers_blob)
 
                     f.write(record)
@@ -332,6 +375,8 @@ class Logger:
             f = open(self.file_manager.current_file, "ab")
 
             f.write(self.headers_blob)
+            f.flush()
+
             current_size = len(self.headers_blob)
 
             try:
@@ -352,6 +397,8 @@ class Logger:
                         f = open(self.file_manager.current_file, "ab")
 
                         f.write(self.headers_blob)
+                        f.flush()
+
                         current_size = len(self.headers_blob)
 
                     f.write(record)

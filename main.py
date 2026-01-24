@@ -10,7 +10,7 @@ def time_value():
 def main():
 
     logger = Logger()
-    logger.initialize("bin")
+    logger.initialize("tlv.bin")
     logger.headers("timestamp", "payload1", "payload2")
     logger.start()
 
@@ -29,7 +29,7 @@ def main():
         end = time.perf_counter()
         sec_count += 1
 
-        logger.publish(record, encode=True)
+        logger.publish(record, encode=False)
 
         if end - start >= 1.0:
             print(f"[Main] exc -> {sec_count}")
