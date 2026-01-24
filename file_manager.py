@@ -62,59 +62,103 @@ class FileManager:
 
         return sum(f.stat().st_size for f in self.log_dir.iterdir() if f.is_file())
     
+    # def compress_directory_if_needed(self):
+    #     if not self.compress:
+    #         return
+    #     current_size = self.directory_size()
+    #     if current_size < self.dir_max_size:
+    #         return
+        
+    #     compression_size = self.dir_max_size * (self.max_compress_percent / 100)
+
+    #     # files = []
+
+    #     # for f in self.log_dir.iterdir():
+    #     #     if not f.is_file():
+    #     #         continue
+    #     #     if f.name.endswith(".gz"):
+    #     #         continue
+    #     #     files.append(f)
+
+    #     # # for f in files: # sorting the diles in the folder
+    #     # #     f_key = f.stat().st_mtime # gets modification time of the file
+
+    #     # # files.sort(by=f_key)
+
+
+    #     # files.sort(key=lambda f: f.stat().st_mtime)
+
+    #     # Why we are sorting the files because by this sorting comes first written file like older -> newer
+
+    #     files = sorted(
+    #         (f for f in self.log_dir.iterdir() if f.is_file() and not f.name.endswith(".gz")),
+    #         key=lambda f: f.stat().st_mtime,
+    #     )
+
+    #     for file in files:
+    #         if self.directory_size() <= compression_size:
+    #             break
+            
+    #         gz_path = file.with_name(file.name + ".gz")
+
+    #         # f_in = open(file, "rb")
+    #         # f_out = gzip.open(gz_path, "wb")
+
+    #         # try:
+    #         #     shutil.copyfileobj(f_in, f_out)
+    #         # finally:
+    #         #     f_in.close()
+    #         #     f_out.close()
+
+    #         # Lossless compression formats reduce disk usage while preserving data exactly; loggers must use streaming-friendly lossless formats like gzip or zstd.
+    #         with open(file, "rb") as f_in, gzip.open(gz_path, "wb") as f_out:
+    #             shutil.copyfileobj(f_in, f_out) # all files in the os level in the binary format
+
+    #         size = file.stat().st_size
+    #         file.unlink() # the converted file will be deleted
+    #         current_size -= size
+            
+
+    def gz_directory_size(self):
+        """Calculates size of only .gz files."""
+        return sum(f.stat().st_size for f in self.log_dir.iterdir() if f.is_file() and f.name.endswith(".gz"))
+
     def compress_directory_if_needed(self):
         if not self.compress:
-            return
-        current_size = self.directory_size()
-        if current_size < self.dir_max_size:
-            return
+            return False # No shutdown needed
+            
+        current_total_size = self.directory_size()
+        gz_size = self.gz_directory_size()
         
-        compression_size = self.dir_max_size * (self.max_compress_percent / 100)
+        # 2. Check 90% GZ limit first (Critical Shutdown)
+        if gz_size >= (self.dir_max_size * 0.90):
+            print(f"[CRITICAL]: .gz files occupy {gz_size/1024/1024:.2f}MB (>= 90%). Shutting down.")
+            return True # Signal for shutdown
 
-        # files = []
+        # 1. Check Max Directory Size (Trigger Compression)
+        if current_total_size < self.dir_max_size:
+            return False
 
-        # for f in self.log_dir.iterdir():
-        #     if not f.is_file():
-        #         continue
-        #     if f.name.endswith(".gz"):
-        #         continue
-        #     files.append(f)
+        print(f"[WARNING]: Max directory size hit ({current_total_size/1024/1024:.2f}MB). Compression started.")
+        
+        compression_target = self.dir_max_size * (self.max_compress_percent / 100)
 
-        # # for f in files: # sorting the diles in the folder
-        # #     f_key = f.stat().st_mtime # gets modification time of the file
-
-        # # files.sort(by=f_key)
-
-
-        # files.sort(key=lambda f: f.stat().st_mtime)
-
-        # Why we are sorting the files because by this sorting comes first written file like older -> newer
-
+        # Get uncompressed files only
         files = sorted(
-            (f for f in self.log_dir.iterdir() if f.is_file() and not f.name.endswith(".gz")),
+            (f for f in self.log_dir.iterdir() if f.is_file() and not f.name.endswith(".gz") and f != self.current_file),
             key=lambda f: f.stat().st_mtime,
         )
 
         for file in files:
-            if self.directory_size() <= compression_size:
+            if self.directory_size() <= compression_target:
                 break
             
             gz_path = file.with_name(file.name + ".gz")
+            try:
+                with open(file, "rb") as f_in, gzip.open(gz_path, "wb") as f_out:
+                    shutil.copyfileobj(f_in, f_out)
+                file.unlink() 
+            except Exception as e:
+                print(f"Failed to compress {file.name}: {e}")
 
-            # f_in = open(file, "rb")
-            # f_out = gzip.open(gz_path, "wb")
-
-            # try:
-            #     shutil.copyfileobj(f_in, f_out)
-            # finally:
-            #     f_in.close()
-            #     f_out.close()
-
-            # Lossless compression formats reduce disk usage while preserving data exactly; loggers must use streaming-friendly lossless formats like gzip or zstd.
-            with open(file, "rb") as f_in, gzip.open(gz_path, "wb") as f_out:
-                shutil.copyfileobj(f_in, f_out) # all files in the os level in the binary format
-
-            size = file.stat().st_size
-            file.unlink() # the converted file will be deleted
-            current_size -= size
-            
+        return False # Continue running

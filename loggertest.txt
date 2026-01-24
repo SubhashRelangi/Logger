@@ -1,0 +1,131 @@
+[Main] exc -> 1929
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1944
+[Main] exc -> 2219
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 2247
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1945
+[Main] exc -> 1940
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 2007
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1737
+[Main] exc -> 1742
+[Main] exc -> 1511
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1716
+[Main] exc -> 1334
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1885
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1412
+[Main] exc -> 1825
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1521
+[Main] exc -> 1741
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1877
+[Main] exc -> 1769
+[Main] exc -> 1468
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1542
+[Main] exc -> 2043
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 2251
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1854
+[Main] exc -> 1811
+WARNING: Max directory size hit (1.02MB). Compression started.
+[Main] exc -> 1796
+[Main] exc -> 1597
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 2030
+[Main] exc -> 1492
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1244
+[Main] exc -> 1718
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1330
+[Main] exc -> 1735
+[Main] exc -> 1213
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1982
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1375
+[Main] exc -> 1954
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1222
+[Main] exc -> 1987
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1514
+[Main] exc -> 1873
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1572
+[Main] exc -> 1447
+[Main] exc -> 1421
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1415
+[Main] exc -> 2152
+WARNING: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1924
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1913
+[Main] exc -> 1879
+[Main] exc -> 1934
+WARNING: Max directory size hit (1.02MB). Compression started.
+[Main] exc -> 1828
+[Main] exc -> 1883
+WARNING: Max directory size hit (1.02MB). Compression started.
+[Main] exc -> 1851
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1736
+[Main] exc -> 2079
+WARNING: Max directory size hit (1.02MB). Compression started.
+[Main] exc -> 1518
+[Main] exc -> 1875
+WARNING: Max directory size hit (1.02MB). Compression started.
+[Main] exc -> 1798
+[Main] exc -> 2143
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1679
+[Main] exc -> 1669
+WARNING: Max directory size hit (1.02MB). Compression started.
+[Main] exc -> 1481
+[Main] exc -> 1771
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 1893
+[Main] exc -> 1762
+WARNING: Max directory size hit (1.02MB). Compression started.
+[Main] exc -> 2307
+WARNING: Max directory size hit (1.01MB). Compression started.
+[Main] exc -> 2014
+[Main] exc -> 1752
+WARNING: Max directory size hit (1.02MB). Compression started.
+[Main] exc -> 1213
+[Main] exc -> 1604
+[Main] exc -> 1693
+WARNING: Max directory size hit (1.03MB). Compression started.
+[Main] exc -> 1519
+[Main] exc -> 1090
+[WARNING]: Max directory size hit (1.16MB). Compression started.
+[Main] exc -> 1206
+[Main] exc -> 1303
+[Main] exc -> 1244
+[WARNING]: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1436
+[Main] exc -> 1268
+[WARNING]: Max directory size hit (1.00MB). Compression started.
+[Main] exc -> 1355
+[Main] exc -> 1246
+[Main] exc -> 1332
+[WARNING]: Max directory size hit (1.01MB). Compression started.
+[CRITICAL]: .gz files occupy 0.90MB (>= 90%). Shutting down.
+[Compressor] 90% threshold hit. Initiating graceful shutdown...
+[Main] exc -> 3520
+[Main] exc -> 6069
+[Main] exc -> 6144
+[Main] exc -> 6152
+[Main] exc -> 6184
+[Main] exc -> 6023
+[Main] exc -> 6197

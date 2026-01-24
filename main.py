@@ -2,15 +2,10 @@ from logger import Logger
 import time
 from datetime import datetime
 
-def time_value():
-    now = datetime.now()
-    timestamp = now.strftime("%H:%M:%S:%f")[:-3]
-    return timestamp
-
 def main():
 
     logger = Logger()
-    logger.initialize("tlv.bin")
+    logger.initialize("csv", compress=True)
     logger.headers("timestamp", "payload1", "payload2")
     logger.start()
 
@@ -35,6 +30,7 @@ def main():
             print(f"[Main] exc -> {sec_count}")
             sec_count = 0
             start = end
+        time.sleep(0.001)
 
 if __name__ == "__main__":
     main()

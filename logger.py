@@ -23,7 +23,7 @@ class Logger:
             self._worker = None
             self._compressor = None
 
-            self._compress_event = threading.Event()
+            # self._compress_event = threading.Event()
 
         except Exception as e:
             print(f"Exception in init: {e}")
@@ -205,7 +205,7 @@ class Logger:
     def stop(self):
         try:
             self._running = False
-            self._compress_event.set()  
+            # self._compress_event.set()  
             self._worker.join()
             if self._compressor:
                 self._compressor.join()
@@ -338,7 +338,7 @@ class Logger:
 
                     if current_size + size > max_bytes:
                         f.close()
-                        self._compress_event.set()
+                        # self._compress_event.set()
 
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         f = open(self.file_manager.current_file, "ab")
@@ -391,7 +391,7 @@ class Logger:
 
                     if current_size + size > max_bytes:
                         f.close()
-                        self._compress_event.set()
+                        # self._compress_event.set()
 
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         f = open(self.file_manager.current_file, "ab")
@@ -445,7 +445,7 @@ class Logger:
 
                     if current_size + size >= max_bytes:
                         f.close()
-                        self._compress_event.set()
+                        # self._compress_event.set()
 
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         f = open(self.file_manager.current_file, "ab")
@@ -505,7 +505,7 @@ class Logger:
                     # Rotate XLSX file
                     if row_count >= MAX_ROWS:
                         wb.save(self.file_manager.current_file)
-                        self._compress_event.set()
+                        # self._compress_event.set()
 
                         # Setup new workbook
                         self.file_manager.current_file = self.file_manager._new_log_file()
@@ -530,18 +530,24 @@ class Logger:
     
     # =========================== COMPRESSOR LOOP ========================
     def _compressor_loop(self):
-            try:
-                while self._running:
-                    if self._compress_event.wait(timeout=1.0):
-                        self._compress_event.clear()
+        try:
+            while self._running:
+                # time.sleep(1.0) # Check every second to avoid high CPU
+                
+                if not self._running:
+                    break
 
-                    if not self._running:
+                try:
+                    # If returns True, it means 90% GZ limit was hit
+                    should_shutdown = self.file_manager.compress_directory_if_needed()
+                    
+                    if should_shutdown:
+                        print("[Compressor] 90% threshold hit. Initiating graceful shutdown...")
+                        self._running = False # This triggers all workers to flush and stop
                         break
 
-                    try:
-                        self.file_manager.compress_directory_if_needed()
-                    except Exception as e:
-                        print(f"[compressor] error: {e}")
+                except Exception as e:
+                    print(f"[compressor] error: {e}")
 
-            except Exception as e:
-                print(f"Exception in compressor loop: {e}")
+        except Exception as e:
+            print(f"Exception in compressor loop: {e}")
