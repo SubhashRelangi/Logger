@@ -1,6 +1,7 @@
 import threading
 import queue
 import time
+import struct, json
 from openpyxl import Workbook
 from config import QUEUE_SIZE, MAX_FILE_SIZE_MB, DEFAULT_FILE_TYPE, DEFAULT_COMPRESS, ENCODER
 from storage import SystemStorage
@@ -214,24 +215,29 @@ class Logger:
     # =========================== BIN ENCODER ========================
     def _encode_record_bin(self, values):
         try:
-            if not self.schema:
-                raise RuntimeError("Schema not set. Call headers() first.")
-
-            if len(values) != len(self.schema):
-                raise ValueError("Record does not match schema length")
-
             payload = bytearray()
 
             for value in values:
-                b = str(value).encode("utf-8")
-                payload += len(b).to_bytes(2, "little")
-                payload += b
 
-            record = bytearray()
-            record += len(payload).to_bytes(2, "little")
-            record += payload
+                if isinstance(value, bool):
+                    payload += struct.pack("<?", value)
 
-            return bytes(record)
+                elif isinstance(value, int):
+                    payload += struct.pack("<q", value)   # int64
+
+                elif isinstance(value, float):
+                    payload += struct.pack("<d", value)   # float64
+
+                elif isinstance(value, str):
+                    payload += value.encode("utf-8") + b"\x00"  
+
+                elif isinstance(value, bytes):
+                    payload += value  # raw bytes (FIXED SIZE REQUIRED)
+
+                else:
+                    raise TypeError(f"Unsupported type: {type(value)}")
+
+            return bytes(payload)
     
         except Exception as e:
             print(f"Exception in binary encoder: {e}")
