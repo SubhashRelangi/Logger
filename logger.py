@@ -149,26 +149,52 @@ class Logger:
     def publish(self, values = None, encode = ENCODER):
 
         try:
-            if values is None:
-                raise ValueError("Values cannot be empty")
-            if encode:
-                match self.file_type:
-                    case "bin":
-                        record = self._encode_record_bin(values)
 
-                    case "tlv.bin":
+            if values is None:
+                raise ValueError("Values cannot be None")
+
+            
+            if self.file_type in ("bin", "tlv.bin"):
+
+                # encode = False → MUST be bytes
+                if not encode:
+                    if not isinstance(values, (bytes, bytearray)):
+                        raise TypeError(
+                            "Values are not binary. Set encode=True to encode them."
+                        )
+                    record = values
+
+                # encode = True → MUST be structured
+                else:
+                    if isinstance(values, (bytes, bytearray)):
+                        raise TypeError(
+                            "Values are already binary. Set encode=False."
+                        )
+
+                    if not isinstance(values, (list, tuple)):
+                        raise TypeError(
+                            "Binary encoder expects list or tuple values."
+                        )
+
+                    if self.file_type == "bin":
+                        record = self._encode_record_bin(values)
+                    else:
                         record = self._encode_record_tlvbin(values)
 
-                    case _:
-                        record = values
-            else:
+            elif self.file_type in ("csv", "xlxs"):
+                if not isinstance(values, (list, tuple)):
+                    raise TypeError("XLSX logger expects list or tuple")
                 record = values
 
+            else:
+                raise ValueError(f"Unsupported file type: {self.file_type}")
+
+            # ---------- QUEUE ----------
             try:
                 self.q.put(record, timeout=0.01)
             except queue.Full:
                 self.dropped_count += 1
-                pass
+
 
         except Exception as e:
             print(f"Exception in publish: {e}")
