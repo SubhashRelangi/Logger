@@ -147,58 +147,80 @@ class Logger:
         
 
     # =========================== PUBLISHER ========================
-    def publish(self, values = None, encode = ENCODER):
-
+    def publish(self, values=None, encode=ENCODER):
         try:
-
             if values is None:
                 raise ValueError("Values cannot be None")
 
-            
+            record = None
+
+            # =======================
+            # 1. NORMALIZE INPUT
+            # =======================
+            if isinstance(values, dict):
+                if not self.schema:
+                    raise RuntimeError(
+                        "Schema not set. Call headers() before using dict input."
+                    )
+                processed_values = [values.get(k) for k in self.schema]
+
+            elif isinstance(values, (list, tuple)):
+                processed_values = list(values)
+
+            elif isinstance(values, (bytes, bytearray)):
+                processed_values = None  # raw binary path
+
+            else:
+                raise TypeError(
+                    f"Unsupported input type: {type(values)}"
+                )
+
+            # =======================
+            # 2. FORMAT HANDLING
+            # =======================
             if self.file_type in ("bin", "tlv.bin"):
 
-                # encode = False → MUST be bytes
+                # ---- RAW BINARY PATH ----
                 if not encode:
                     if not isinstance(values, (bytes, bytearray)):
                         raise TypeError(
-                            "Values are not binary. Set encode=True to encode them."
+                            "encode=False requires raw bytes input or make it encode = True"
                         )
                     record = values
 
-                # encode = True → MUST be structured
+                # ---- STRUCTURED → BINARY ----
                 else:
-                    if isinstance(values, (bytes, bytearray)):
+                    if processed_values is None:
                         raise TypeError(
-                            "Values are already binary. Set encode=False."
-                        )
-
-                    if not isinstance(values, (list, tuple)):
-                        raise TypeError(
-                            "Binary encoder expects list or tuple values."
+                            "encode=True requires structured input (list/dict) or make it encode = False"
                         )
 
                     if self.file_type == "bin":
-                        record = self._encode_record_bin(values)
+                        record = self._encode_record_bin(processed_values)
                     else:
-                        record = self._encode_record_tlvbin(values)
+                        record = self._encode_record_tlvbin(processed_values)
 
-            elif self.file_type in ("csv", "xlxs"):
-                if not isinstance(values, (list, tuple)):
-                    raise TypeError("XLSX logger expects list or tuple")
-                record = values
+            elif self.file_type in ("csv", "xlsx"):
+                if processed_values is None:
+                    raise TypeError(
+                        "CSV/XLSX do not accept raw binary input"
+                    )
+                record = processed_values
 
             else:
                 raise ValueError(f"Unsupported file type: {self.file_type}")
 
-            # ---------- QUEUE ----------
+            # =======================
+            # 3. QUEUE
+            # =======================
             try:
                 self.q.put(record, timeout=0.01)
             except queue.Full:
                 self.dropped_count += 1
 
-
         except Exception as e:
             print(f"Exception in publish: {e}")
+
 
     
     # =========================== STOP ========================
@@ -314,8 +336,8 @@ class Logger:
         try:
             max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
             current_size = 0
-            start = time.time()
-            sec_count = 0
+            # start = time.time()
+            # sec_count = 0
 
             # open first file
             f = open(self.file_manager.current_file, "ab")
@@ -328,7 +350,7 @@ class Logger:
 
             try:
                 while self._running or not self.q.empty():
-                    end = time.time()
+                    # end = time.time()
                     try:
                         record = self.q.get(timeout=0.1)
                     except queue.Empty:
@@ -352,10 +374,10 @@ class Logger:
                     current_size += size
                     sec_count += 1
 
-                    if end - start >= 1.0:
-                        print(f"[Worker] Exc: {sec_count}")
-                        sec_count = 0
-                        start = end
+                    # if end - start >= 1.0:
+                    #     print(f"[Worker] Exc: {sec_count}")
+                    #     sec_count = 0
+                    #     start = end
 
                     self.q.task_done()
 
@@ -369,8 +391,8 @@ class Logger:
         try:
             max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
             current_size = 0
-            start = time.time()
-            sec_count = 0
+            # start = time.time()
+            # sec_count = 0
 
             f = open(self.file_manager.current_file, "ab")
 
@@ -381,7 +403,7 @@ class Logger:
 
             try:
                 while self._running or not self.q.empty():
-                    end = time.time()
+                    # end = time.time()
                     try:
                         record = self.q.get(timeout=0.1)
                     except queue.Empty:
@@ -405,10 +427,10 @@ class Logger:
                     current_size += size
                     sec_count += 1
 
-                    if end - start >= 1.0:
-                        print(f"[Worker] Exc: {sec_count}")
-                        sec_count = 0
-                        start = end
+                    # if end - start >= 1.0:
+                    #     print(f"[Worker] Exc: {sec_count}")
+                    #     sec_count = 0
+                    #     start = end
 
                     self.q.task_done()
 
