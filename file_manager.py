@@ -11,15 +11,21 @@ class FileManager:
                 log_directory: Path = None, # Use None here
                 max_file_size_mb: int = None, # Use None here
                 dir_max_size_mb: int = None, 
-                max_dir_size_warning: int = None,
                 compress: bool = False):
         
         self.file_type = file_type.lstrip(".")
         self.log_dir = log_directory or settings.LOG_DIRECTORY
         self.max_file_size = (max_file_size_mb or settings.MAX_FILE_SIZE_MB) * 1024 * 1024
         self.dir_max_size = (dir_max_size_mb or settings.LOG_DIRECTORY_MAX_SIZE_MB) * 1024 * 1024
-        self.max_dir_size_warning = (max_dir_size_warning or settings.MAX_DIRECTORY_WARNING_THRESHOLD) * 1024 * 1024
         self.compress = compress
+
+        self.warning_bytes = (
+            settings.LOG_DIRECTORY_MAX_SIZE_MB *
+            settings.MAX_DIRECTORY_WARNING_THRESHOLD / 100 *
+            1024 * 1024
+        )
+
+        print(f"warning bytes: {self.warning_bytes}")
 
 
         self.log_dir.mkdir(parents=True, exist_ok=True)
@@ -89,10 +95,10 @@ class FileManager:
 
         dir_size = self.directory_size()
 
-        if dir_size >= self.max_dir_size_warning:
+        if dir_size >= self.warning_bytes:
             print(
                 f"[WARNING] {self.log_dir} exceeds "
-                f"{self.max_dir_size_warning // (1024 * 1024)} MB!"
+                f"{self.warning_bytes} Bytes!"
             )
 
         if dir_size >= self.dir_max_size:

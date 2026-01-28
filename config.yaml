@@ -3,7 +3,7 @@ storage:
   threshold_percent: 80 # max available system storage percentage when logging will performed if available is less than threshold logging wont happen 
   max_directory_size_mb: 1 # Max directory size to the Logs Directory when logs directory hits the Max size the logger will stop
   max_dir_warning_threshold: 70 # Dirctory size hits threshold% of the Max directory size the logger gives warning Your directory size hits the warning threshold
-  max_files: 5 # Number of files in original format in the directory even compression done. when the file goes to 11 the 1 file will be compressed
+  max_files: 10 # Number of files in original format in the directory even compression done. when the file goes to 11 the 1 file will be compressed
 
 # Logger Performance & Defaults 
 logger:

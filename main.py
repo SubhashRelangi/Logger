@@ -6,7 +6,7 @@ from global_config import settings
 
 def main():
 
-    settings.LOG_DIRECTORY = Path("/home/user1/learning/LoggerModule/Logs")
+    settings.LOG_DIRECTORY = Path("Logs")
     # settings.XLSX_MAX_ROWS = 2500
 
     logger = Logger()
