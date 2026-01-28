@@ -3,7 +3,7 @@ import queue
 import time
 import struct, json
 from openpyxl import Workbook
-from config import QUEUE_SIZE, MAX_FILE_SIZE_MB, DEFAULT_FILE_TYPE, DEFAULT_COMPRESS, ENCODER
+from global_config import settings
 from storage import SystemStorage
 from file_manager import FileManager
 
@@ -15,9 +15,10 @@ class Logger:
             self.file_type = None
             self.schema = None
 
-            self.q = queue.Queue(maxsize=QUEUE_SIZE)
+            self.q = queue.Queue(maxsize=settings.QUEUE_SIZE)
             self.headers_blob = None
             self.dropped_count = 0
+            self.file_no = 0
 
 
             self._worker = None
@@ -30,7 +31,7 @@ class Logger:
 
     
     # =========================== INITILIZER ========================
-    def initialize(self, file_type: str = DEFAULT_FILE_TYPE, compress: bool = DEFAULT_COMPRESS):
+    def initialize(self, file_type: str = None, compress: bool = None):
         try:
             if not file_type:
                 raise ValueError("file_type must be provided")
@@ -38,8 +39,10 @@ class Logger:
             if not SystemStorage().checking():
                 raise RuntimeError("Insufficient storage")
             
-            self.file_type = file_type
-            self.file_manager = FileManager(file_type=file_type, compress=compress)
+            self.file_type = file_type or settings.DEFAULT_FILE_TYPE
+            do_compress = compress if compress is not None else settings.DEFAULT_COMPRESS
+            
+            self.file_manager = FileManager(file_type=self.file_type, compress=do_compress)
         
         except Exception as e:
             print(f"Exception in initilizer: {e}")
@@ -81,13 +84,6 @@ class Logger:
                     raise ValueError("Invalied file format.")
                 
             self._worker.start()
-                
-            if self.file_manager.compress:
-                self._compressor = threading.Thread(
-                    target=self._compressor_loop,
-                    daemon=True
-                )
-                self._compressor.start()
 
         except Exception as e:
             print(f"Exception in start: {e}")
@@ -147,12 +143,13 @@ class Logger:
         
 
     # =========================== PUBLISHER ========================
-    def publish(self, values=None, encode=ENCODER):
+    def publish(self, values=None, encode=None):
         try:
             if values is None:
                 raise ValueError("Values cannot be None")
 
             record = None
+            encode = encode or settings.ENCODER
 
             # =======================
             # 1. NORMALIZE INPUT
@@ -334,7 +331,7 @@ class Logger:
     # =========================== BIN WORKER ========================
     def bin_worker(self):
         try:
-            max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
+            max_bytes = settings.MAX_FILE_SIZE_MB * 1024 * 1024
             current_size = 0
             # start = time.time()
             # sec_count = 0
@@ -358,21 +355,27 @@ class Logger:
 
                     size = len(record)
 
-                    if current_size + size > max_bytes:
+                    if current_size + size >= max_bytes:
                         f.close()
-                        # self._compress_event.set()
 
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         f = open(self.file_manager.current_file, "ab")
+                        current_size = 0
+                        self.file_no += 1
 
-                        f.write(self.headers_blob)
-                        f.flush()
+                        if self.headers_blob:
+                            f.write(self.headers_blob)
+                            f.flush()
+                            current_size += len(self.headers_blob)
 
-                        current_size = len(self.headers_blob)
+                        if self.file_no >= settings.MAX_FILES:
+                            self.file_manager.compress_logs()
+                            self.file_no -= 1
+
 
                     f.write(record)
                     current_size += size
-                    sec_count += 1
+                    # sec_count += 1
 
                     # if end - start >= 1.0:
                     #     print(f"[Worker] Exc: {sec_count}")
@@ -389,7 +392,7 @@ class Logger:
     # =========================== TLV BIN WORKER ========================
     def tlv_worker(self):
         try:
-            max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
+            max_bytes = settings.MAX_FILE_SIZE_MB * 1024 * 1024
             current_size = 0
             # start = time.time()
             # sec_count = 0
@@ -411,21 +414,27 @@ class Logger:
 
                     size = len(record)
 
-                    if current_size + size > max_bytes:
+                    if current_size + size >= max_bytes:
                         f.close()
-                        # self._compress_event.set()
 
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         f = open(self.file_manager.current_file, "ab")
+                        current_size = 0
+                        self.file_no += 1
 
-                        f.write(self.headers_blob)
-                        f.flush()
+                        if self.headers_blob:
+                            f.write(self.headers_blob)
+                            f.flush()
+                            current_size += len(self.headers_blob)
 
-                        current_size = len(self.headers_blob)
+                        if self.file_no >= settings.MAX_FILES:
+                            self.file_manager.compress_logs()
+                            self.file_no -= 1
 
+            
                     f.write(record)
                     current_size += size
-                    sec_count += 1
+                    # sec_count += 1
 
                     # if end - start >= 1.0:
                     #     print(f"[Worker] Exc: {sec_count}")
@@ -443,7 +452,7 @@ class Logger:
     # =========================== CSV WORKER ========================
     def csv_worker(self):
         try:
-            max_bytes = MAX_FILE_SIZE_MB * 1024 * 1024
+            max_bytes = settings.MAX_FILE_SIZE_MB * 1024 * 1024
             current_size = 0
 
             f = open(self.file_manager.current_file, "ab")
@@ -467,16 +476,20 @@ class Logger:
 
                     if current_size + size >= max_bytes:
                         f.close()
-                        # self._compress_event.set()
 
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         f = open(self.file_manager.current_file, "ab")
                         current_size = 0
+                        self.file_no += 1
 
                         if self.headers_blob:
                             f.write(self.headers_blob)
                             f.flush()
                             current_size += len(self.headers_blob)
+
+                        if self.file_no >= settings.MAX_FILES:
+                            self.file_manager.compress_logs()
+                            self.file_no -= 1
 
                     f.write(encoded)
                     current_size += size
@@ -491,7 +504,7 @@ class Logger:
     def xlsx_worker(self):
         try:
             # Excel hard limit ≈ 1,048,576
-            MAX_ROWS = 250_000
+            MAX_ROWS = settings.XLSX_MAX_ROWS
             wb = Workbook(write_only=True)
             ws = wb.create_sheet(title="log")
             row_count = 0
@@ -533,6 +546,12 @@ class Logger:
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         wb = Workbook(write_only=True)
                         ws, row_count = prepare_new_sheet(wb)
+                        self.file_no += 1
+
+                        if self.file_no >= settings.MAX_FILES:
+                            self.file_manager.compress_logs()
+                            self.file_no -= 1
+
 
             except Exception as e:
                 # Log your error here so the thread doesn't die silently
@@ -548,28 +567,3 @@ class Logger:
 
         except Exception as e:
             print(f"Exception in XLSX Worker: {e}")
-
-    
-    # =========================== COMPRESSOR LOOP ========================
-    def _compressor_loop(self):
-        try:
-            while self._running:
-                # time.sleep(1.0) # Check every second to avoid high CPU
-                
-                if not self._running:
-                    break
-
-                try:
-                    # If returns True, it means 90% GZ limit was hit
-                    should_shutdown = self.file_manager.compress_directory_if_needed()
-                    
-                    if should_shutdown:
-                        print("[Compressor] 90% threshold hit. Initiating graceful shutdown...")
-                        self._running = False # This triggers all workers to flush and stop
-                        break
-
-                except Exception as e:
-                    print(f"[compressor] error: {e}")
-
-        except Exception as e:
-            print(f"Exception in compressor loop: {e}")

@@ -129,3 +129,1027 @@ WARNING: Max directory size hit (1.03MB). Compression started.
 [Main] exc -> 6184
 [Main] exc -> 6023
 [Main] exc -> 6197
+
+
+
+
+
+
+
+
+
+==================================================================== Second Test ====================================================================================
+
+[Main] exc -> 2141
+[Main] exc -> 2232
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2234
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 1819
+[Main] exc -> 1829
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2469
+[Main] exc -> 2109
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2501
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2356
+[Main] exc -> 2318
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 1915
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2242
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2571
+[Main] exc -> 2664
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2344
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2337
+[Main] exc -> 2111
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2528
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2403
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2353
+[Main] exc -> 2356
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2318
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2047
+[Main] exc -> 2458
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2531
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2495
+[Main] exc -> 2372
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2718
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 2338
+[Main] exc -> 1667
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 1706
+[Main] exc -> 2075
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 1771
+[Main] exc -> 1541
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 2008
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2334
+[Main] exc -> 2308
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 2275
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2416
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2399
+[Main] exc -> 2270
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2280
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2278
+[Main] exc -> 2077
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2144
+[Main] exc -> 2250
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 2131
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2367
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2334
+[Main] exc -> 2681
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 2250
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2094
+[Main] exc -> 2334
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2189
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2358
+[Main] exc -> 2226
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2298
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2088
+[Main] exc -> 2223
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2262
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2323
+[Main] exc -> 2180
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2219
+[Main] exc -> 1896
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 1967
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2062
+[Main] exc -> 1719
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2170
+[Main] exc -> 1918
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 1498
+[Main] exc -> 1602
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 1826
+[Main] exc -> 1939
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 1986
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 1979
+[Main] exc -> 2098
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 2252
+[Main] exc -> 1760
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2293
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2230
+[Main] exc -> 2417
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 2583
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 2431
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2681
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2268
+[Main] exc -> 2523
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2332
+[Main] exc -> 2203
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 2057
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2081
+[Main] exc -> 2314
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2092
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 2323
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2248
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 4223
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4484
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5048
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4819
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5085
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5194
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5117
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4907
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5064
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4860
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5349
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5226
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4211
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5177
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4362
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5121
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5139
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4853
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5112
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 4698
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5200
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5165
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 4925
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4926
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5063
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4634
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5226
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4360
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5234
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 4724
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5368
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4968
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5062
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5444
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5264
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5380
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5140
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4704
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5045
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5328
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4970
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4238
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5486
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5202
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5179
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4787
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5289
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 4231
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5660
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5247
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5659
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5191
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5404
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5616
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5454
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5132
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5615
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5344
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5508
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5699
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5023
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5572
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5575
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5510
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5466
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5460
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5425
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5566
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5499
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5329
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5067
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5646
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5200
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5409
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5360
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5594
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5357
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5590
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5242
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5222
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5564
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5141
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5228
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5622
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5344
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5680
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5084
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5479
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5566
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5493
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5608
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5086
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5512
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5577
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5247
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5203
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5303
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5511
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5429
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5755
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5151
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5584
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5468
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5285
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5612
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5399
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5375
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5585
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5603
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5372
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5461
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5396
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5581
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5564
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5405
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5301
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5637
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5541
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5276
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5599
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5702
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 5309
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5219
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 4606
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5039
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5439
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 5056
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 5375
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5006
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 5312
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 4716
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 5378
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 5408
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 4956
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 5321
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 4801
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 4516
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 5087
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 5241
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 4769
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 4219
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 4393
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 4420
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[Main] exc -> 2827
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[WARNING]: Max directory size hit (0.55MB). Compression started.
+[Main] exc -> 2589
+[WARNING]: Max directory size hit (0.50MB). Compression started.
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 2134
+[WARNING]: Max directory size hit (0.55MB). Compression started.
+[Main] exc -> 2478
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 1953
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 1791
+[WARNING]: Max directory size hit (0.55MB). Compression started.
+[Main] exc -> 1856
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 1824
+[Main] exc -> 2103
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 2117
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 1952
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 2247
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.55MB). Compression started.
+[Main] exc -> 2219
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[Main] exc -> 1941
+[WARNING]: Max directory size hit (0.53MB). Compression started.
+[Main] exc -> 2111
+[WARNING]: Max directory size hit (0.51MB). Compression started.
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 2703
+[Main] exc -> 2243
+[WARNING]: Max directory size hit (0.52MB). Compression started.
+[Main] exc -> 1401
+[WARNING]: Max directory size hit (0.59MB). Compression started.
+[Main] exc -> 1293
+[WARNING]: Max directory size hit (0.54MB). Compression started.
+[Main] exc -> 1867
+[Main] exc -> 1588
+[CRITICAL]: .gz files occupy 0.45MB (>= 90%). Shutting down.
+[Compressor] 90% threshold hit. Initiating graceful shutdown...
+[Main] exc -> 1864
+[Main] exc -> 4287
+[Main] exc -> 4923
+[Main] exc -> 5640
+[Main] exc -> 5865
+[Main] exc -> 5520
+[Main] exc -> 5667
+[Main] exc -> 5736
+[Main] exc -> 5680
+[Main] exc -> 5620
+[Main] exc -> 5904
+[Main] exc -> 5955
+[Main] exc -> 5892
+[Main] exc -> 5782
+[Main] exc -> 5804
+[Main] exc -> 5704
+[Main] exc -> 5774
+[Main] exc -> 5657
+[Main] exc -> 3143
+[Main] exc -> 95
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 97
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 94
+[Main] exc -> 96
+[Main] exc -> 94
+[Main] exc -> 92
+[Main] exc -> 97
+[Main] exc -> 98
+[Main] exc -> 97
+[Main] exc -> 94
+[Main] exc -> 93
+[Main] exc -> 92
+[Main] exc -> 96
+[Main] exc -> 93
+[Main] exc -> 93
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 93
+[Main] exc -> 94
+[Main] exc -> 95
+[Main] exc -> 95
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 95
+[Main] exc -> 92
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 97
+[Main] exc -> 97
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 95
+[Main] exc -> 95
+[Main] exc -> 95
+[Main] exc -> 97
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 96
+[Main] exc -> 95
+[Main] exc -> 94
+^C
+[Main] Ctrl+C detected, stopping logger...
+[Main] Logger stopped safely
+
+

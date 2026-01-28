@@ -3,33 +3,24 @@ import datetime
 import gzip
 import shutil
 from pathlib import Path
-from config import (
-    MAX_FILE_SIZE_MB,
-    LOG_DIRECTORY,
-    LOG_DIRECTORY_MAX_SIZE_MB,
-    MAX_COMPRESSION_PERCENT,
-)
+from global_config import settings
 
 class FileManager:
 
     def __init__(self, file_type: str, 
-                log_directory: Path = LOG_DIRECTORY, 
-                max_file_size_mb: int = MAX_FILE_SIZE_MB, 
-                dir_max_size_mb: int = LOG_DIRECTORY_MAX_SIZE_MB, 
-                max_compress_percent: int = MAX_COMPRESSION_PERCENT,
-                compress: bool = False,
-                # create_file: bool = True # For the Multiprocessing
-                ):
-    
-        if not file_type:
-            print("file_type must be initialized")
-
+                log_directory: Path = None, # Use None here
+                max_file_size_mb: int = None, # Use None here
+                dir_max_size_mb: int = None, 
+                max_dir_size_warning: int = None,
+                compress: bool = False):
+        
         self.file_type = file_type.lstrip(".")
-        self.log_dir = log_directory
-        self.max_file_size = max_file_size_mb * 1024 * 1024
-        self.dir_max_size = dir_max_size_mb * 1024 * 1024
-        self.max_compress_percent = max_compress_percent
+        self.log_dir = log_directory or settings.LOG_DIRECTORY
+        self.max_file_size = (max_file_size_mb or settings.MAX_FILE_SIZE_MB) * 1024 * 1024
+        self.dir_max_size = (dir_max_size_mb or settings.LOG_DIRECTORY_MAX_SIZE_MB) * 1024 * 1024
+        self.max_dir_size_warning = (max_dir_size_warning or settings.MAX_DIRECTORY_WARNING_THRESHOLD) * 1024 * 1024
         self.compress = compress
+
 
         self.log_dir.mkdir(parents=True, exist_ok=True)
         self.current_file = self._new_log_file()
@@ -41,13 +32,6 @@ class FileManager:
         path.touch(exist_ok=False)
         return path
 
-    # def rotate_if_needed(self):
-    #     if not self.current_file.exists():
-    #         self.current_file = self._new_log_file()
-    #         return
-
-    #     if self.current_file.stat().st_size >= self.max_file_size:
-    #         self.current_file = self._new_log_file()
 
 
     def directory_size(self):
@@ -61,6 +45,73 @@ class FileManager:
         # return total_size
 
         return sum(f.stat().st_size for f in self.log_dir.iterdir() if f.is_file())
+    
+    #=================================== COMPRESSOR ======================================
+    def compress_worker(self, compress_file):
+        
+        gz_path = compress_file.with_suffix(compress_file.suffix + ".gz")
+
+        with open(compress_file, "rb") as f_in, gzip.open(gz_path, "wb") as f_out:
+            shutil.copyfileobj(f_in, f_out)
+
+            compress_file.unlink()
+
+    #=================================== GZ_SORTER ========================================
+    def gz_files_sort(self):
+        files = sorted(
+            (f for f in self.log_dir.rglob("*.gz") if f.is_file()),
+            key=lambda f: f.stat().st_mtime
+        )
+
+        return files
+    
+
+    #================================= COMPRESSOR LOGS ====================================
+    def compress_logs(self):
+
+        if not self.compress:
+            return
+        # Compress oldest non-gz file
+        sorted_files = sorted(
+            (
+                f for f in self.log_dir.iterdir()
+                if f.is_file()
+                and not f.name.endswith(".gz")
+                and f != self.current_file
+            ),
+            key=lambda f: f.stat().st_mtime,
+        )
+
+        if not sorted_files:
+            return
+
+        compress_file = sorted_files[0]
+        self.compress_worker(compress_file)
+
+        dir_size = self.directory_size()
+
+        if dir_size >= self.max_dir_size_warning:
+            print(
+                f"[WARNING] {self.log_dir} exceeds "
+                f"{self.max_dir_size_warning // (1024 * 1024)} MB!"
+            )
+
+        if dir_size >= self.dir_max_size:
+            gz_files = self.gz_files_sort()
+
+            for old_gz in gz_files:
+                size = old_gz.stat().st_size
+                old_gz.unlink()
+                print(f"[Logger] Deleted {old_gz} to free space.")
+                dir_size -= size
+                if dir_size < self.dir_max_size:
+                    break
+
+        if dir_size >= self.dir_max_size:
+            raise Exception(
+                f"[CRITICAL] Logging stopped: {self.log_dir} exceeds "
+                f"{self.dir_max_size // (1024 * 1024)} MB."
+            )
     
     # def compress_directory_if_needed(self):
     #     if not self.compress:
@@ -117,48 +168,3 @@ class FileManager:
     #         size = file.stat().st_size
     #         file.unlink() # the converted file will be deleted
     #         current_size -= size
-            
-
-    def gz_directory_size(self):
-        """Calculates size of only .gz files."""
-        return sum(f.stat().st_size for f in self.log_dir.iterdir() if f.is_file() and f.name.endswith(".gz"))
-
-    def compress_directory_if_needed(self):
-        if not self.compress:
-            return False # No shutdown needed
-            
-        current_total_size = self.directory_size()
-        gz_size = self.gz_directory_size()
-        
-        # 2. Check 90% GZ limit first (Critical Shutdown)
-        if gz_size >= (self.dir_max_size * 0.90):
-            print(f"[CRITICAL]: .gz files occupy {gz_size/1024/1024:.2f}MB (>= 90%). Shutting down.")
-            return True # Signal for shutdown
-
-        # 1. Check Max Directory Size (Trigger Compression)
-        if current_total_size < self.dir_max_size:
-            return False
-
-        print(f"[WARNING]: Max directory size hit ({current_total_size/1024/1024:.2f}MB). Compression started.")
-        
-        compression_target = self.dir_max_size * (self.max_compress_percent / 100)
-
-        # Get uncompressed files only
-        files = sorted(
-            (f for f in self.log_dir.iterdir() if f.is_file() and not f.name.endswith(".gz") and f != self.current_file),
-            key=lambda f: f.stat().st_mtime,
-        )
-
-        for file in files:
-            if self.directory_size() <= compression_target:
-                break
-            
-            gz_path = file.with_name(file.name + ".gz")
-            try:
-                with open(file, "rb") as f_in, gzip.open(gz_path, "wb") as f_out:
-                    shutil.copyfileobj(f_in, f_out)
-                file.unlink() 
-            except Exception as e:
-                print(f"Failed to compress {file.name}: {e}")
-
-        return False # Continue running

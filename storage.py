@@ -1,9 +1,9 @@
 import shutil
-from config import STORAGE_THRESHOLD_PERCENT
+from global_config import settings
 
 class SystemStorage:
     
-    def __init__(self, threshold_value: int = STORAGE_THRESHOLD_PERCENT):
+    def __init__(self, threshold_value: int = settings.STORAGE_THRESHOLD_PERCENT):
         
         self.threshold = threshold_value
 

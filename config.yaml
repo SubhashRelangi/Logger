@@ -1,0 +1,18 @@
+# Storage Safety Settings
+storage:
+  threshold_percent: 80
+  max_directory_size_mb: 1
+  max_dir_warning_threshold: 70
+  max_files: 10
+
+# Logger Performance & Defaults 
+logger:
+  directory: "logs11"
+  max_file_size_mb: 0.1
+  queue_size: 100000
+  default_file_type: "csv"
+  default_compress: false
+  encoder: false
+
+xlsxconfig:
+  rows: 250000
