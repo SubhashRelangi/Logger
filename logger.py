@@ -1,7 +1,6 @@
 import threading
 import queue
-import time
-import struct, json
+import struct
 from openpyxl import Workbook
 from global_config import settings
 from storage import SystemStorage
@@ -33,8 +32,6 @@ class Logger:
     # =========================== INITILIZER ========================
     def initialize(self, file_type: str = None, compress: bool = None):
         try:
-            if not file_type:
-                raise ValueError("file_type must be provided")
 
             if not SystemStorage().checking():
                 raise RuntimeError("Insufficient storage")

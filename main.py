@@ -7,22 +7,22 @@ from global_config import settings
 def main():
 
     settings.LOG_DIRECTORY = Path("/home/user1/learning/LoggerModule/Logs")
-    settings.XLSX_MAX_ROWS = 2500
+    # settings.XLSX_MAX_ROWS = 2500
 
     logger = Logger()
     logger.initialize("tlv.bin", compress=True)
     logger.headers("timestamp", "payload1", "payload2")
     logger.start()
  
-    start = time.perf_counter()
-    sec_count = 0
+    # start = time.perf_counter()
+    # sec_count = 0
     record = [time.time(), 1000, 1.11110]
 
-    # record = {
-    #     "timestamp": time.time(),
-    #     "payload1": 1000,
-    #     "payload2": 1.11110
-    # }
+    record = {
+        "timestamp": time.time(),
+        "payload1": 1000,
+        "payload2": 1.11110
+    }
 
     # record = bytes.fromhex(
     #     "1B 00 "
@@ -32,14 +32,14 @@ def main():
     # )
     try:
         while True:
-            end = time.perf_counter()
-            sec_count += 1
-            logger.publish(record, encode=True)
+    #         end = time.perf_counter()
+    #         sec_count += 1
+            logger.publish()
 
-            if end - start >= 1.0:
-                print(f"[Main] exc -> {sec_count}")
-                sec_count = 0
-                start = end
+    #         if end - start >= 1.0:
+    #             print(f"[Main] exc -> {sec_count}")
+    #             sec_count = 0
+    #             start = end
             time.sleep(0.0001)
     except KeyboardInterrupt:
         print("\n[Main] Ctrl+C detected, stopping logger...")
