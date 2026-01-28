@@ -34,7 +34,7 @@ def main():
         while True:
     #         end = time.perf_counter()
     #         sec_count += 1
-            logger.publish()
+            logger.publish(record, encode=True)
 
     #         if end - start >= 1.0:
     #             print(f"[Main] exc -> {sec_count}")

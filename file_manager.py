@@ -53,7 +53,6 @@ class FileManager:
 
         with open(compress_file, "rb") as f_in, gzip.open(gz_path, "wb") as f_out:
             shutil.copyfileobj(f_in, f_out)
-
             compress_file.unlink()
 
     #=================================== GZ_SORTER ========================================
