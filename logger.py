@@ -13,12 +13,12 @@ class Logger:
             self._running = False
             self.file_type = None
             self.schema = None
+            self._enabled = True
 
             self.q = queue.Queue(maxsize=settings.QUEUE_SIZE)
             self.headers_blob = None
             self.dropped_count = 0
             self.file_no = 0
-
 
             self._worker = None
             self._compressor = None
@@ -28,104 +28,87 @@ class Logger:
         except Exception as e:
             print(f"Exception in init: {e}")
 
-    
     # =========================== INITILIZER ========================
-    def initialize(self, file_type: str = None, compress: bool = None):
+    def initialize(self, file_type: str, compress: bool):
         try:
-
             if not SystemStorage().checking():
-                raise RuntimeError("Insufficient storage")
-            
+                self._enabled = False
+                self._running = False
+                self.file_manager = None
+                return   
+
             self.file_type = file_type or settings.DEFAULT_FILE_TYPE
             do_compress = compress if compress is not None else settings.DEFAULT_COMPRESS
-            
+
             self.file_manager = FileManager(file_type=self.file_type, compress=do_compress)
-        
+
         except Exception as e:
             print(f"Exception in initilizer: {e}")
-
+            self._enabled = False
 
     # =========================== START ========================
     def start(self):
         try:
-            if self.file_manager is None:
-                raise RuntimeError("Logger not initialized")
-        
+            if not self._enabled or self.file_manager is None:
+                return   
+
             self._running = True
 
             match self.file_type:
                 case "csv":
-                    self._worker = threading.Thread(
-                        target=self.csv_worker,
-                        daemon=True
-                    )
-
+                    self._worker = threading.Thread(target=self.csv_worker, daemon=True)
                 case "bin":
-                    self._worker = threading.Thread(
-                        target=self.bin_worker,
-                        daemon=True
-                    )
-
+                    self._worker = threading.Thread(target=self.bin_worker, daemon=True)
                 case "tlv.bin":
-                    self._worker = threading.Thread(
-                        target=self.tlv_worker,
-                        daemon=True
-                    )
-
+                    self._worker = threading.Thread(target=self.tlv_worker, daemon=True)
                 case "xlsx":
-                    self._worker = threading.Thread(
-                        target=self.xlsx_worker,
-                        daemon=True
-                    )
+                    self._worker = threading.Thread(target=self.xlsx_worker, daemon=True)
                 case _:
-                    raise ValueError("Invalied file format.")
-                
+                    return
+
             self._worker.start()
 
         except Exception as e:
             print(f"Exception in start: {e}")
+            self._enabled = False
 
     # =========================== HEADER WRITER ========================
     def headers(self, *headers):
         try:
-            if not headers:
-                raise ValueError("Headers cannot be empty")
+            if not self._enabled:
+                return
 
-            # Store schema once (format-agnostic)
+            if not headers:
+                return
+
             self.schema = tuple(headers)
 
             match self.file_type:
                 case "csv":
-                    self.headers_blob = (
-                        ",".join(self.schema) + "\n"
-                    ).encode("utf-8")
+                    self.headers_blob = (",".join(self.schema) + "\n").encode("utf-8")
 
                 case "bin":
                     buf = bytearray()
-                    buf += b"LOG1"                     # magic
-                    buf += (1).to_bytes(1, "little")   # version
+                    buf += b"LOG1"
+                    buf += (1).to_bytes(1, "little")
                     buf += len(self.schema).to_bytes(1, "little")
-
                     for name in self.schema:
                         b = name.encode("utf-8")
                         buf += len(b).to_bytes(1, "little")
                         buf += b
-
                     self.headers_blob = bytes(buf)
 
                 case "tlv.bin":
                     buf = bytearray()
-                    buf += b"TLV1"                     # magic
-                    buf += (1).to_bytes(1, "little")   # version
+                    buf += b"TLV1"
+                    buf += (1).to_bytes(1, "little")
                     buf += len(self.schema).to_bytes(1, "little")
-
                     FIELD_DEF = 0x01
                     for name in self.schema:
                         b = name.encode("utf-8")
                         buf += FIELD_DEF.to_bytes(1, "little")
                         buf += len(b).to_bytes(2, "little")
                         buf += b
-
                     self.headers_blob = bytes(buf)
 
                 case "xlsx":
@@ -133,14 +116,16 @@ class Logger:
 
                 case _:
                     raise ValueError(f"Unsupported file type: {self.file_type}")
-                
+
         except Exception as e:
             print(f"Exception in header: {e}")
 
-        
-
     # =========================== PUBLISHER ========================
     def publish(self, values=None, encode=None):
+        
+        if not self._running or not self._enabled:
+            return
+
         try:
             if values is None:
                 raise ValueError("Values cannot be None")
@@ -208,27 +193,23 @@ class Logger:
             # 3. QUEUE
             # =======================
             try:
-                self.q.put(record, timeout=0.01)
+                self.q.put_nowait(values)
             except queue.Full:
                 self.dropped_count += 1
 
         except Exception as e:
+            self._enabled = False
             print(f"Exception in publish: {e}")
 
-
-    
     # =========================== STOP ========================
     def stop(self):
         try:
+            self._enabled = False
             self._running = False
-            # self._compress_event.set()  
-            self._worker.join()
-            if self._compressor:
-                self._compressor.join()
         except Exception as e:
             print(f"Exception in stop: {e}")
-    
-    # =========================== BIN ENCODER ========================
+
+    # =========================== ENCODERS ========================
     def _encode_record_bin(self, values):
         try:
             payload = bytearray()
@@ -257,8 +238,7 @@ class Logger:
     
         except Exception as e:
             print(f"Exception in binary encoder: {e}")
-    
-    # # =========================== TLV BIN ENCODER ========================
+
     def _encode_record_tlvbin(self, values):
         try:
             if not self.schema:
@@ -322,6 +302,7 @@ class Logger:
 
         except Exception as e:
             raise RuntimeError(f"Exception in TLV encoder: {e}")
+
 
 
         

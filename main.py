@@ -10,13 +10,13 @@ def main():
     # settings.XLSX_MAX_ROWS = 2500
 
     logger = Logger()
-    logger.initialize("tlv.bin", compress=True)
+    logger.initialize("csv", compress=True)
     logger.headers("timestamp", "payload1", "payload2")
     logger.start()
  
-    # start = time.perf_counter()
-    # sec_count = 0
-    record = [time.time(), 1000, 1.11110]
+    start = time.perf_counter()
+    sec_count = 0
+    # record = [time.time(), 1000, 1.11110]
 
     record = {
         "timestamp": time.time(),
@@ -32,15 +32,15 @@ def main():
     # )
     try:
         while True:
-    #         end = time.perf_counter()
-    #         sec_count += 1
-            logger.publish(record, encode=True)
+            end = time.perf_counter()
+            sec_count += 1
+            logger.publish(record, encode=False)
 
-    #         if end - start >= 1.0:
-    #             print(f"[Main] exc -> {sec_count}")
-    #             sec_count = 0
-    #             start = end
-            time.sleep(0.0001)
+            if end - start >= 1.0:
+                print(f"[Main] exc -> {sec_count}")
+                sec_count = 0
+                start = end
+            # time.sleep(0.01)
     except KeyboardInterrupt:
         print("\n[Main] Ctrl+C detected, stopping logger...")
 
