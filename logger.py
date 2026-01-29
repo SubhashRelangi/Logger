@@ -18,7 +18,6 @@ class Logger:
             self.q = queue.Queue(maxsize=settings.QUEUE_SIZE)
             self.headers_blob = None
             self.dropped_count = 0
-            self.file_no = 0
 
             self._worker = None
             self._compressor = None
@@ -131,10 +130,11 @@ class Logger:
                 raise ValueError("Values cannot be None")
 
             record = None
-            encode = encode or settings.ENCODER
+            if encode == None:
+                encode = settings.ENCODER
 
             # =======================
-            # 1. NORMALIZE INPUT
+            # 1. NORMALIZE INPUT    
             # =======================
             if isinstance(values, dict):
                 if not self.schema:
@@ -193,7 +193,7 @@ class Logger:
             # 3. QUEUE
             # =======================
             try:
-                self.q.put_nowait(values)
+                self.q.put(record, timeout=0.001)
             except queue.Full:
                 self.dropped_count += 1
 
@@ -346,9 +346,7 @@ class Logger:
                             f.flush()
                             current_size += len(self.headers_blob)
 
-                        if self.file_no >= settings.MAX_FILES:
-                            self.file_manager.compress_logs()
-                            self.file_no -= 1
+                        self.file_manager.compress_logs()
 
 
                     f.write(record)
@@ -405,9 +403,7 @@ class Logger:
                             f.flush()
                             current_size += len(self.headers_blob)
 
-                        if self.file_no >= settings.MAX_FILES:
-                            self.file_manager.compress_logs()
-                            self.file_no -= 1
+                        self.file_manager.compress_logs()
 
             
                     f.write(record)
@@ -458,16 +454,13 @@ class Logger:
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         f = open(self.file_manager.current_file, "ab")
                         current_size = 0
-                        self.file_no += 1
 
                         if self.headers_blob:
                             f.write(self.headers_blob)
                             f.flush()
                             current_size += len(self.headers_blob)
 
-                        if self.file_no >= settings.MAX_FILES:
-                            self.file_manager.compress_logs()
-                            self.file_no -= 1
+                        self.file_manager.compress_logs()
 
                     f.write(encoded)
                     current_size += size
@@ -526,9 +519,7 @@ class Logger:
                         ws, row_count = prepare_new_sheet(wb)
                         self.file_no += 1
 
-                        if self.file_no >= settings.MAX_FILES:
-                            self.file_manager.compress_logs()
-                            self.file_no -= 1
+                        self.file_manager.compress_logs()
 
 
             except Exception as e:

@@ -18,6 +18,7 @@ class FileManager:
         self.max_file_size = (max_file_size_mb or settings.MAX_FILE_SIZE_MB) * 1024 * 1024
         self.dir_max_size = (dir_max_size_mb or settings.LOG_DIRECTORY_MAX_SIZE_MB) * 1024 * 1024
         self.compress = compress
+        self.max_uncompressed_files = settings.MAX_FILES
 
         self.warning_bytes = (
             settings.LOG_DIRECTORY_MAX_SIZE_MB *
@@ -25,11 +26,11 @@ class FileManager:
             1024 * 1024
         )
 
-        print(f"warning bytes: {self.warning_bytes}")
-
 
         self.log_dir.mkdir(parents=True, exist_ok=True)
         self.current_file = self._new_log_file()
+        self.gz_files_to_delete = 0
+        self.gz_deleted_size = 0
 
     def _new_log_file(self):
         ts = datetime.datetime.now().strftime("%Y%m%d_%H%M%S_%f")[:-3]
@@ -76,47 +77,56 @@ class FileManager:
 
         if not self.compress:
             return
-        # Compress oldest non-gz file
-        sorted_files = sorted(
-            (
-                f for f in self.log_dir.iterdir()
-                if f.is_file()
-                and not f.name.endswith(".gz")
-                and f != self.current_file
-            ),
-            key=lambda f: f.stat().st_mtime,
-        )
 
-        if not sorted_files:
-            return
 
-        compress_file = sorted_files[0]
-        self.compress_worker(compress_file)
+        csv_files = [
+            f for f in self.log_dir.iterdir()
+            if f.is_file() and f.suffix == f".{self.file_type}"
+        ]
+
+        csv_files.sort(key=lambda f: f.stat().st_mtime, reverse=True)
+
+        for old_file in csv_files[self.max_uncompressed_files:]:
+            self.compress_worker(old_file)
 
         dir_size = self.directory_size()
+
 
         if dir_size >= self.warning_bytes:
             print(
                 f"[WARNING] {self.log_dir} exceeds "
-                f"{self.warning_bytes} Bytes!"
+                f"{self.warning_bytes / 1000000} MB!"
             )
 
         if dir_size >= self.dir_max_size:
-            gz_files = self.gz_files_sort()
 
+            gz_files = sorted(
+                (
+                    f for f in self.log_dir.iterdir()
+                    if f.is_file() and f.suffix == ".gz"
+                ),
+                key=lambda f: f.stat().st_mtime  
+            )
+
+            self.gz_files_to_delete = self.max_file_size - self.current_file.stat().st_size
+        
             for old_gz in gz_files:
                 size = old_gz.stat().st_size
+                self.gz_deleted_size += size
                 old_gz.unlink()
                 print(f"[Logger] Deleted {old_gz} to free space.")
                 dir_size -= size
+                # print(f"gz_files_to_delete: {self.gz_files_to_delete} and current_file: {self.current_file.stat().st_size} and gz_deleted_size: {self.gz_deleted_size}")
+                
+                if self.gz_deleted_size >= self.gz_files_to_delete:
+                    raise RuntimeError(
+                    f"[CRITICAL] Logging stopped: {self.log_dir} exceeds "
+                    f"{self.dir_max_size // (1024 * 1024)} MB."
+                )
+
                 if dir_size < self.dir_max_size:
                     break
 
-        if dir_size >= self.dir_max_size:
-            raise Exception(
-                f"[CRITICAL] Logging stopped: {self.log_dir} exceeds "
-                f"{self.dir_max_size // (1024 * 1024)} MB."
-            )
     
     # def compress_directory_if_needed(self):
     #     if not self.compress:
