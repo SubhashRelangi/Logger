@@ -6,8 +6,12 @@ from global_config import settings
 
 def main():
 
-    settings.LOG_DIRECTORY = Path("Logs")
-    # settings.XLSX_MAX_ROWS = 2500
+    config = {
+        "STORAGE_THRESHOLD_PERCENT": 80,
+        "LOG_DIRECTORY": "LOGS!",
+        "XLSX_MAX_ROWS": 2500
+    }
+    settings.update_config(config)
 
     logger = Logger()
     logger.initialize("csv", compress=True)

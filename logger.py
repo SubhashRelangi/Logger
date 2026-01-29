@@ -180,6 +180,11 @@ class Logger:
                         record = self._encode_record_tlvbin(processed_values)
 
             elif self.file_type in ("csv", "xlsx"):
+                if encode:
+                    raise TypeError(
+                        "Encoder = True CSV/XLSX doesn't need make it Encoder =  False"
+                    )
+                
                 if processed_values is None:
                     raise TypeError(
                         "CSV/XLSX do not accept raw binary input"
@@ -317,7 +322,7 @@ class Logger:
             # open first file
             f = open(self.file_manager.current_file, "ab")
 
-            # WRITE HEADER 
+            # WRITE HEADER  
             f.write(self.headers_blob)
             f.flush()
 
@@ -339,7 +344,6 @@ class Logger:
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         f = open(self.file_manager.current_file, "ab")
                         current_size = 0
-                        self.file_no += 1
 
                         if self.headers_blob:
                             f.write(self.headers_blob)
@@ -396,14 +400,13 @@ class Logger:
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         f = open(self.file_manager.current_file, "ab")
                         current_size = 0
-                        self.file_no += 1
 
                         if self.headers_blob:
                             f.write(self.headers_blob)
                             f.flush()
                             current_size += len(self.headers_blob)
 
-                        self.file_manager.compress_logs()
+                    self.file_manager.compress_logs()
 
             
                     f.write(record)
@@ -517,7 +520,6 @@ class Logger:
                         self.file_manager.current_file = self.file_manager._new_log_file()
                         wb = Workbook(write_only=True)
                         ws, row_count = prepare_new_sheet(wb)
-                        self.file_no += 1
 
                         self.file_manager.compress_logs()
 
